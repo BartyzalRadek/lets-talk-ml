@@ -1,0 +1,105 @@
+\documentclass{beamer}
+
+% Top-aligning columns within a top-aligned frame
+% https://tex.stackexchange.com/questions/16447/beamer-top-aligning-columns-within-a-top-aligned-frame
+\makeatletter
+\newenvironment{myitemize}{%
+   \setlength{\topsep}{0pt}
+   \setlength{\partopsep}{0pt}
+   \renewcommand*{\@listi}{\leftmargin\leftmargini \parsep\z@ \topsep\z@ \itemsep\z@}
+   \let\@listI\@listi
+   \itemize
+}{\enditemize}
+\makeatother  
+
+\usetheme{Warsaw}
+\usepackage[USenglish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb, amsmath}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{url}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+\title{Born Again Neural Networks}  
+\author{Radek Bartyzal}
+\date{\today} 
+\institute{Let's talk ML in Prague}
+
+\frame{\titlepage} 
+
+\begin{frame}{Intro}
+
+\begin{block}{Knowledge distillation}
+Transfer knowledge acquired by a learned
+teacher model to a new student model.
+\end{block}
+
+\end{frame}
+%--------- END Frame 1 -------------
+
+\begin{frame}[t]{Prior work}
+
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+Teacher
+\begin{itemize}
+\item high-capacity model
+\item good performance
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+Student
+\begin{itemize}
+\item more compact model
+\end{itemize}
+\end{column}
+
+\end{columns}
+
+\vfill
+By transferring knowledge, one hopes to benefit from the student’s
+compactness while suffering only minimal degradation in performance.
+
+\end{frame}
+%--------- END Frame 2 -------------
+
+\begin{frame}{Born Again Networks}
+
+
+ Rather than
+compressing models, we train students that are parameterized identically to their
+parents. Surprisingly, these born again networks (BANs), tend to outperform their
+teacher models. Our experiments with born again dense networks demonstrate
+state-of-the-art performance on the CIFAR-100 dataset reaching a validation error
+of 15.5\% with a single model and 14.9\% with our best ensemble. Additionally, we
+investigate knowledge transfer to architectures that are different, but with capacity
+comparable to their teachers. In these experiments, we show that similar advantages
+can be achieved by transferring knowledge between dense networks and residual
+networks of similar capacity.
+
+\end{frame}
+
+
+\begin{frame}{Sources}
+
+\begin{thebibliography}{0}
+
+  \bibitem[1]{cit:ban} Tommaso Furlanello et al. "Born Again Neural Networks." Workshop on Meta-Learning (MetaLearn 2017) at NIPS. Accessible from: \url{http://metalearning.ml/papers/metalearn17_furlanello.pdf}
+  
+  
+\end{thebibliography}
+
+\end{frame}
+ 
+ 
+ 
+\end{document}
