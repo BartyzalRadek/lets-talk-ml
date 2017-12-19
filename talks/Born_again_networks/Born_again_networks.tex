@@ -30,22 +30,34 @@
 \begin{document}
 \title{Born Again Neural Networks}  
 \author{Radek Bartyzal}
-\date{\today} 
+\date{Date TBA} 
 \institute{Let's talk ML in Prague}
 
 \frame{\titlepage} 
 
-\begin{frame}{Intro}
+\begin{frame}{Prior work}
 
-\begin{block}{Knowledge distillation}
-Transfer knowledge acquired by a learned
-teacher model to a new student model.
+
+\begin{block}{Ensembles}
+Diverse models with similar validation performances can be often be combined to achieve predictive
+power superior to each of the constituent models. \cite{cit:ensembles}
 \end{block}
+
+\begin{block}{Born again trees}
+Learn a single tree that is able to recover the performance of a multiple-tree predictor. \cite{cit:bat}
+\end{block}
+
+\begin{block}{Knowledge distillation = model compression}
+Transfer knowledge acquired by a learned
+teacher model to a new simpler student model. \cite{cit:distill}
+\end{block}
+
+
 
 \end{frame}
 %--------- END Frame 1 -------------
 
-\begin{frame}[t]{Prior work}
+\begin{frame}[t]{Knolewdge distillation}
 
 \begin{columns}[t]
 \begin{column}{0.5\textwidth}
@@ -60,6 +72,7 @@ Teacher
 Student
 \begin{itemize}
 \item more compact model
+\item not as good performance as the teacher but better than if it was trained without it
 \end{itemize}
 \end{column}
 
@@ -74,10 +87,13 @@ compactness while suffering only minimal degradation in performance.
 
 \begin{frame}{Born Again Networks}
 
+\begin{itemize}
+\item not compressing models
+\item students are parameterized identically to their parents.
+\item 
+\end{itemize}
 
- Rather than
-compressing models, we train students that are parameterized identically to their
-parents. Surprisingly, these born again networks (BANs), tend to outperform their
+  Surprisingly, these born again networks (BANs), tend to outperform their
 teacher models. Our experiments with born again dense networks demonstrate
 state-of-the-art performance on the CIFAR-100 dataset reaching a validation error
 of 15.5\% with a single model and 14.9\% with our best ensemble. Additionally, we
@@ -94,6 +110,14 @@ networks of similar capacity.
 \begin{thebibliography}{0}
 
   \bibitem[1]{cit:ban} Tommaso Furlanello et al. "Born Again Neural Networks." Workshop on Meta-Learning (MetaLearn 2017) at NIPS. Accessible from: \url{http://metalearning.ml/papers/metalearn17_furlanello.pdf}
+  
+  \bibitem[2]{cit:stat} Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231. Accessible from: \url{https://projecteuclid.org/download/pdf_1/euclid.ss/1009213726\%20}
+  
+  \bibitem[3]{cit:ensembles} Hansen, Lars Kai, and Peter Salamon. "Neural network ensembles." IEEE transactions on pattern analysis and machine intelligence 12.10 (1990): 993-1001.
+  
+  \bibitem[4]{cit:bat} Breiman, Leo, and Nong Shang. "Born again trees." Accessible from: \url{https://www.stat.berkeley.edu/~breiman/BAtrees.pdf} ps (1996).
+  
+  \bibitem[5]{cit:distill} Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015).
   
   
 \end{thebibliography}
