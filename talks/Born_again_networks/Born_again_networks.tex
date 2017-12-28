@@ -85,25 +85,68 @@ compactness while suffering only minimal degradation in performance.
 \end{frame}
 %--------- END Frame 2 -------------
 
-\begin{frame}{Born Again Networks}
+\begin{frame}{Knolewdge distillation}
+
+Teacher produces soft targets = probabilities of incorrect classes = the key to generalization outside of the training dataset.
+
+\vfill
+
+Training student = minimize weighted average of:
+
+\begin{itemize}
+\item cross entropy with the soft targets
+\item cross entropy with the hard targets = labels
+\end{itemize}
+
+
+\end{frame}
+%--------- END Frame 3 -------------
+
+\begin{frame}{Knolewdge distillation results}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/distilled_result}
+\caption{DNN acoustic models used in Automatic Speech Recognition. \cite{cit:distill}}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 4 -------------
+\begin{frame}{Born Again Networks (BANs)}
 
 \begin{itemize}
 \item not compressing models
-\item students are parameterized identically to their parents.
-\item 
+\item students are parameterized identically to their parents
+\item students outperform teachers
+\item knowledge transfer between dense networks and residual
+networks of similar capacity
 \end{itemize}
 
-  Surprisingly, these born again networks (BANs), tend to outperform their
-teacher models. Our experiments with born again dense networks demonstrate
-state-of-the-art performance on the CIFAR-100 dataset reaching a validation error
-of 15.5\% with a single model and 14.9\% with our best ensemble. Additionally, we
-investigate knowledge transfer to architectures that are different, but with capacity
-comparable to their teachers. In these experiments, we show that similar advantages
-can be achieved by transferring knowledge between dense networks and residual
-networks of similar capacity.
+\vfill
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/BAN_loss_func}
+\caption{BAN loss function adding Kullback–Leibler divergence between the new model’s outputs and the outputs of the original model. \cite{cit:ban}}
+\end{figure}
 
 \end{frame}
+%--------- END Frame 5 -------------
+\begin{frame}{BAN Ensembles}
 
+Apply BANs sequentially with multiple generations of knowledge transfer. In
+each case, the $k$-th model is trained, with knowledge transferred from the $k-1$-th student:
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/sequential_ban1}
+%\caption{ \cite{cit:ban}}
+\end{figure}
+
+\begin{block}{Born Again Network Ensemble (BANE)}
+Averaging the prediction of multiple generations of BANs.
+\end{block}
+ 
+
+\end{frame}
+%--------- END Frame 6 -------------
 
 \begin{frame}{Sources}
 
