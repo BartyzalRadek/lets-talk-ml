@@ -147,7 +147,50 @@ Averaging the prediction of multiple generations of BANs.
 
 \end{frame}
 %--------- END Frame 6 -------------
+\begin{frame}{DenseNets reminder: Dense block }
 
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/denseBlock}
+%\caption{Dense block \cite{cit:ban}}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 7 -------------
+\begin{frame}{DenseNets reminder: Deep DenseNet }
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/denseNet}
+\caption{A deep DenseNet with three dense blocks. The layers between two adjacent blocks are referred to as transition layers and change
+feature-map sizes via convolution and pooling. \cite{cit:densenet}}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 8 -------------
+\begin{frame}{BAN DenseNets Experiments }
+
+All experiments on: CIFAR-100 (100 classes each containing 600 32x32 colour images).
+
+\begin{itemize}
+\item DenseNet-BC-(depth)-(growth rate)
+\item BAN-1/2/3 = sequential training by previous BAN-(k-1)
+\item Ens*2/3 = ensembles of 2/3 BAN-x
+\end{itemize}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/denseNet_experiment}
+\caption{BAN training is clearly beneficial for DenseNets on CIFAR. \cite{cit:ban}}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{BAN Results}
+
+Non-ensemble SOTA by BAN-3 80-80
+ 
+
+\end{frame}
+
+%--------- END Frame 7 -------------
 \begin{frame}{Sources}
 
 \begin{thebibliography}{0}
@@ -157,11 +200,19 @@ Averaging the prediction of multiple generations of BANs.
   \bibitem[2]{cit:stat} Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231. Accessible from: \url{https://projecteuclid.org/download/pdf_1/euclid.ss/1009213726\%20}
   
   \bibitem[3]{cit:ensembles} Hansen, Lars Kai, and Peter Salamon. "Neural network ensembles." IEEE transactions on pattern analysis and machine intelligence 12.10 (1990): 993-1001.
+\end{thebibliography}
+
+\end{frame}
+
+
+\begin{frame}{Sources}
+
+\begin{thebibliography}{0}
+  \bibitem[4]{cit:bat} Breiman, Leo, and Nong Shang. "Born again trees." ps (1996). Accessible from: \url{https://www.stat.berkeley.edu/~breiman/BAtrees.pdf}
   
-  \bibitem[4]{cit:bat} Breiman, Leo, and Nong Shang. "Born again trees." Accessible from: \url{https://www.stat.berkeley.edu/~breiman/BAtrees.pdf} ps (1996).
+  \bibitem[5]{cit:distill} Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015). Accessible from: \url{https://arxiv.org/pdf/1503.02531.pdf}
   
-  \bibitem[5]{cit:distill} Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015).
-  
+  \bibitem[6]{cit:densenet} Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/pdf/1608.06993.pdf}
   
 \end{thebibliography}
 
