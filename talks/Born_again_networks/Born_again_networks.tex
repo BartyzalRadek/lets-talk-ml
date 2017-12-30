@@ -183,14 +183,54 @@ All experiments on: CIFAR-100 (100 classes each containing 600 32x32 colour imag
 
 \end{frame}
 %--------- END Frame 9 -------------
+\begin{frame}{ResNets reminder}
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/resnet_blocks}
+\caption{Various residual blocks used in the paper. Batch normalization and ReLU precede
+each convolution (omitted for clarity). \cite{cit:resnet}}
+\end{figure}
+\end{frame}
+%--------- END Frame 10 -------------
+\begin{frame}{BAN ResNets}
+BAN-ResNets:
+\begin{itemize}
+\item trained by DenseNet 90-60 teacher
+\item baseline = wide-ResNet28 \cite{cit:resnet}
+\item tested multiple nets with different number of units per block
+\item all benefit from BAN training
+\end{itemize}
+
+\vfill
+
+BAN-ResNets outperform:
+\begin{itemize}
+\item traditional counterparts
+\item equivalent ResNets trained without DenseNet teacher
+\item their DenseNet teacher
+\end{itemize}
+\end{frame}
+%--------- END Frame 11 -------------
 \begin{frame}{BAN Results}
 
-Non-ensemble SOTA by BAN-3 80-80
- 
+Single model non-ensemble SOTA on CIFAR 100 trained with SGD without any sort
+of shake-shake regularization:
+\begin{itemize}
+\item BAN-3-DenseNet-80-80
+\item 22M parameters
+\item 15.5\% error 
+\end{itemize}
 
+\vfill
+
+Ensemble SOTA under the same conditions:
+\begin{itemize}
+\item BAN-3-DenseNet-BC-80-120
+\item 150M parameters
+\item 14.9\% error 
+\end{itemize}
 \end{frame}
 
-%--------- END Frame 7 -------------
+%--------- END Frame 12 -------------
 \begin{frame}{Sources}
 
 \begin{thebibliography}{0}
@@ -214,6 +254,7 @@ Non-ensemble SOTA by BAN-3 80-80
   
   \bibitem[6]{cit:densenet} Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/pdf/1608.06993.pdf}
   
+  \bibitem[7]{cit:resnet} Zagoruyko, Sergey, and Nikos Komodakis. "Wide residual networks." arXiv preprint arXiv:1605.07146 (2016). Accessible from: \url{https://arxiv.org/abs/1605.07146}
 \end{thebibliography}
 
 \end{frame}
