@@ -1,0 +1,150 @@
+\documentclass{beamer}
+
+% Top-aligning columns within a top-aligned frame
+% https://tex.stackexchange.com/questions/16447/beamer-top-aligning-columns-within-a-top-aligned-frame
+\makeatletter
+\newenvironment{myitemize}{%
+   \setlength{\topsep}{0pt}
+   \setlength{\partopsep}{0pt}
+   \renewcommand*{\@listi}{\leftmargin\leftmargini \parsep\z@ \topsep\z@ \itemsep\z@}
+   \let\@listI\@listi
+   \itemize
+}{\enditemize}
+\makeatother  
+
+\usetheme{Warsaw}
+\usepackage[USenglish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb, amsmath}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{url}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+\title{Objects that sound \\(unsupervised localization of sources of sounds in images trained from videos)}  
+\author{Radek Bartyzal}
+\date{Date TBA} 
+\institute{Let's talk ML in Prague}
+
+\frame{\titlepage} 
+
+\begin{frame}{Achievements}
+
+Achievements:
+
+\begin{itemize}
+
+\item networks that can embed audio and visual inputs into a common space that is suitable for cross-modal retrieval
+\medskip
+\item network that can localize the object that sounds in an image, given the audio signal
+\medskip
+\item training from unlabelled video using only audio-visual correspondence (AVC) as the objective function. 
+\end{itemize}
+\medskip
+
+\begin{block}{Cross-modal retrieval}
+Use audio to search in an image.
+\end{block}
+
+\begin{block}{Self-supervision}
+Labels are constructed directly from data.
+\end{block}
+
+\end{frame}
+%--------- END Frame 1 -------------
+
+\begin{frame}{Audio-visual correspondence (AVC)}
+
+\begin{itemize}
+\item[Input:] Pair of a video frame and 1 second of audio.
+\medskip
+\item[Task:] Are they in correspondence or not?
+\medskip
+\item[Labels:] Obtained directly from video for both positives
+(matching) and negatives (mismatched) pairs. 
+\end{itemize}
+
+\vfill
+
+Learnt visual and audio representations are:
+\begin{itemize}
+\item discriminative = distinguish matched and mismatched pairs
+\item semantically meaningful = network has to find semantical match between audio and an image (visual network has only 1 image as input)
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 2 -------------
+
+\begin{frame}{Knolewdge distillation}
+
+
+
+
+\end{frame}
+%--------- END Frame 3 -------------
+
+\begin{frame}{Knolewdge distillation results}
+
+
+\end{frame}
+%--------- END Frame 4 -------------
+\begin{frame}{Born Again Networks (BANs)}
+
+
+\end{frame}
+%--------- END Frame 5 -------------
+\begin{frame}{BAN Ensembles}
+
+ 
+
+\end{frame}
+%--------- END Frame 6 -------------
+\begin{frame}{DenseNets reminder: Dense block }
+
+
+\end{frame}
+%--------- END Frame 7 -------------
+\begin{frame}{DenseNets reminder: Deep DenseNet }
+
+
+\end{frame}
+%--------- END Frame 8 -------------
+\begin{frame}{BAN DenseNets Experiments }
+
+
+
+\end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{ResNets reminder}
+
+\end{frame}
+%--------- END Frame 10 -------------
+\begin{frame}{BAN ResNets}
+
+\end{frame}
+%--------- END Frame 11 -------------
+\begin{frame}{BAN Results}
+
+
+\end{frame}
+
+%--------- END Frame 12 -------------
+\begin{frame}{Sources}
+
+\begin{thebibliography}{0}
+
+  \bibitem[1]{cit:ots} Arandjelović, Relja, and Andrew Zisserman. "Objects that Sound." arXiv preprint arXiv:1712.06651 (2017). Accessible from: \url{https://arxiv.org/abs/1712.06651}
+  
+\end{thebibliography}
+\end{frame}
+ 
+ 
+ 
+\end{document}
