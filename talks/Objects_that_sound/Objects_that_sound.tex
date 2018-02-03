@@ -12,12 +12,12 @@
 }{\enditemize}
 \makeatother  
 
-\usetheme{Warsaw}
 \usepackage[USenglish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb, amsmath}
 \usepackage{bm}
 \usepackage{color}
+\usepackage{tikz}
 \usepackage{url}
 \hypersetup{
     colorlinks,
@@ -27,8 +27,30 @@
     urlcolor=blue
 }
 
+\usetheme{Warsaw}
+\setbeamertemplate{headline}{}
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+  
+
+\bibliographystyle{apalike}
+% make bibliography entries smaller
+%\renewcommand\bibfont{\scriptsize}
+% Now get rid of all the colours
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+
+% and kill the abominable icon
+\setbeamertemplate{bibliography item}{}
+
 \begin{document}
-\title{Objects that sound \\(unsupervised localization of sources of sounds in images trained from videos)}  
+\title{Objects that sound }  
+\subtitle{unsupervised localization of sources of sounds in images trained from videos}
 \author{Radek Bartyzal}
 \date{Date TBA} 
 \institute{Let's talk ML in Prague}
@@ -82,7 +104,9 @@ Learnt visual and audio representations are:
 \end{frame}
 %--------- END Frame 2 -------------
 
-\begin{frame}{Knolewdge distillation}
+\begin{frame}{Previous work - $L^3$}
+
+%$L^3$ = Look, Listen & Learn \cite{cit:l3}
 
 
 
@@ -90,33 +114,33 @@ Learnt visual and audio representations are:
 \end{frame}
 %--------- END Frame 3 -------------
 
-\begin{frame}{Knolewdge distillation results}
+\begin{frame}{Previous work - $L^3$}
 
 
 \end{frame}
 %--------- END Frame 4 -------------
-\begin{frame}{Born Again Networks (BANs)}
+\begin{frame}{Audio-Visual Embedding Network (AVENet)}
 
 
 \end{frame}
 %--------- END Frame 5 -------------
-\begin{frame}{BAN Ensembles}
+\begin{frame}{Audio-Visual Embedding Network (AVENet)}
 
  
 
 \end{frame}
 %--------- END Frame 6 -------------
-\begin{frame}{DenseNets reminder: Dense block }
+\begin{frame}{Extending the AVE-Net}
 
 
 \end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{DenseNets reminder: Deep DenseNet }
+\begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
 
 
 \end{frame}
 %--------- END Frame 8 -------------
-\begin{frame}{BAN DenseNets Experiments }
+\begin{frame}{: Audio-Visual Object Localization (AVOL-Net)}
 
 
 
@@ -142,6 +166,7 @@ Learnt visual and audio representations are:
 
   \bibitem[1]{cit:ots} Arandjelović, Relja, and Andrew Zisserman. "Objects that Sound." arXiv preprint arXiv:1712.06651 (2017). Accessible from: \url{https://arxiv.org/abs/1712.06651}
   
+  \bibitem[2]{cit:l3} Arandjelovic, Relja, and Andrew Zisserman. "Look, listen and learn." 2017 IEEE International Conference on Computer Vision (ICCV). IEEE, 2017. Accessible from: \url{https://arxiv.org/abs/1705.08168}
 \end{thebibliography}
 \end{frame}
  

@@ -12,12 +12,12 @@
 }{\enditemize}
 \makeatother  
 
-\usetheme{Warsaw}
 \usepackage[USenglish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb, amsmath}
 \usepackage{bm}
 \usepackage{color}
+\usepackage{tikz}
 \usepackage{url}
 \hypersetup{
     colorlinks,
@@ -26,6 +26,27 @@
     linkcolor=blue,
     urlcolor=blue
 }
+
+\usetheme{Warsaw}
+\setbeamertemplate{headline}{}
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+  
+
+\bibliographystyle{apalike}
+% make bibliography entries smaller
+%\renewcommand\bibfont{\scriptsize}
+% Now get rid of all the colours
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+
+% and kill the abominable icon
+\setbeamertemplate{bibliography item}{}
 
 \begin{document}
 \title{Born Again Neural Networks}  
@@ -235,11 +256,11 @@ Ensemble SOTA under the same conditions:
 
 \begin{thebibliography}{0}
 
-  \bibitem[1]{cit:ban} Tommaso Furlanello et al. "Born Again Neural Networks." Workshop on Meta-Learning (MetaLearn 2017) at NIPS. Accessible from: \url{http://metalearning.ml/papers/metalearn17_furlanello.pdf}
+  \bibitem[1]{cit:ban} 1. Tommaso Furlanello et al. "Born Again Neural Networks." Workshop on Meta-Learning (MetaLearn 2017) at NIPS. Accessible from: \url{http://metalearning.ml/papers/metalearn17_furlanello.pdf}
   
-  \bibitem[2]{cit:stat} Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231. Accessible from: \url{https://projecteuclid.org/download/pdf_1/euclid.ss/1009213726\%20}
+  \bibitem[2]{cit:stat} 2. Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231. Accessible from: \url{https://projecteuclid.org/download/pdf_1/euclid.ss/1009213726\%20}
   
-  \bibitem[3]{cit:ensembles} Hansen, Lars Kai, and Peter Salamon. "Neural network ensembles." IEEE transactions on pattern analysis and machine intelligence 12.10 (1990): 993-1001.
+  \bibitem[3]{cit:ensembles} 3. Hansen, Lars Kai, and Peter Salamon. "Neural network ensembles." IEEE transactions on pattern analysis and machine intelligence 12.10 (1990): 993-1001.
 \end{thebibliography}
 
 \end{frame}
@@ -248,13 +269,13 @@ Ensemble SOTA under the same conditions:
 \begin{frame}{Sources}
 
 \begin{thebibliography}{0}
-  \bibitem[4]{cit:bat} Breiman, Leo, and Nong Shang. "Born again trees." ps (1996). Accessible from: \url{https://www.stat.berkeley.edu/~breiman/BAtrees.pdf}
+  \bibitem[4]{cit:bat} 4. Breiman, Leo, and Nong Shang. "Born again trees." ps (1996). Accessible from: \url{https://www.stat.berkeley.edu/~breiman/BAtrees.pdf}
   
-  \bibitem[5]{cit:distill} Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015). Accessible from: \url{https://arxiv.org/pdf/1503.02531.pdf}
+  \bibitem[5]{cit:distill} 5. Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015). Accessible from: \url{https://arxiv.org/pdf/1503.02531.pdf}
   
-  \bibitem[6]{cit:densenet} Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/pdf/1608.06993.pdf}
+  \bibitem[6]{cit:densenet} 6. Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/pdf/1608.06993.pdf}
   
-  \bibitem[7]{cit:resnet} Zagoruyko, Sergey, and Nikos Komodakis. "Wide residual networks." arXiv preprint arXiv:1605.07146 (2016). Accessible from: \url{https://arxiv.org/abs/1605.07146}
+  \bibitem[7]{cit:resnet} 7. Zagoruyko, Sergey, and Nikos Komodakis. "Wide residual networks." arXiv preprint arXiv:1605.07146 (2016). Accessible from: \url{https://arxiv.org/abs/1605.07146}
 \end{thebibliography}
 
 \end{frame}
