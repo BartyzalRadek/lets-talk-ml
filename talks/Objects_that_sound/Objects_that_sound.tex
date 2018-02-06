@@ -85,7 +85,7 @@ Labels are constructed directly from data.
 \begin{frame}{Audio-visual correspondence (AVC)}
 
 \begin{itemize}
-\item[Input:] Pair of a video frame and 1 second of audio.
+\item[Input:] Pair of a video frame and 1 second of audio represented as a log-spectrogram.
 \medskip
 \item[Task:] Are they in correspondence or not?
 \medskip
@@ -102,29 +102,76 @@ Learnt visual and audio representations are:
 \end{itemize}
 
 \end{frame}
+%--------- END Frame 1.5 -------------
+\begin{frame}{Dataset}
+
+\begin{itemize}
+\item publicly available AudioSet dataset
+\item 10 second clips from YouTube
+\item authors filtered it for musical
+instruments, singing and tools, yielding 110 audio classes
+\item train set = 263k clips
+\item validation set = 30k clips
+\item test set = 4.3k clips
+\item labels are only used for quantitative
+evaluation purposes of cross-modal retrieval
+\end{itemize}
+
+\end{frame}
 %--------- END Frame 2 -------------
 
 \begin{frame}{Previous work - $L^3$}
 
-%$L^3$ = Look, Listen & Learn \cite{cit:l3}
+$L^3$ = Look, Listen and Learn \cite{cit:l3}
 
 
+\begin{enumerate}
+\item Get embeddings by separate specialized sub-networks.
+\item Concatenated embeddings go to fully connected layers that calculate the correspondence score.
+\end{enumerate}
+
+
+
+\vfill
+
+Limitations:
+
+\begin{itemize}
+\item visual and audio representations are not aligned so they cannot be used for crossmodal retrieval - fixed by AVE-Net
+\item cannot localize the sound source in an image - solved by AVOL-Net
+\end{itemize}
 
 
 \end{frame}
 %--------- END Frame 3 -------------
 
 \begin{frame}{Previous work - $L^3$}
-
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/ave-net}
+\caption{$L^3$ vs AVE-Net.}
+\end{figure}
 
 \end{frame}
 %--------- END Frame 4 -------------
-\begin{frame}{Audio-Visual Embedding Network (AVENet)}
+\begin{frame}{Audio-Visual Embedding Network (AVE-Net)}
+Changes compared to $L^3$:
+\begin{enumerate}
+\item fully connected layers are moved to the sub-networks
+\item L2 normalization on top of them
+\item 128-D embedding out of each sub-network
+\item euclidean distance of the normalized embeddings
+\item 1 layer followed by softmax 
+\end{enumerate}
 
+\vfill
 
+The tiny FC layer scales and shifts the distance to
+calibrate it for the subsequent softmax. The bias of the FC
+essentially learns the threshold on the distance above which
+the two features are deemed not to correspond.
 \end{frame}
 %--------- END Frame 5 -------------
-\begin{frame}{Audio-Visual Embedding Network (AVENet)}
+\begin{frame}{Audio-Visual Embedding Network (AVE-Net)}
 
  
 
@@ -140,7 +187,7 @@ Learnt visual and audio representations are:
 
 \end{frame}
 %--------- END Frame 8 -------------
-\begin{frame}{: Audio-Visual Object Localization (AVOL-Net)}
+\begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
 
 
 
@@ -164,9 +211,9 @@ Learnt visual and audio representations are:
 
 \begin{thebibliography}{0}
 
-  \bibitem[1]{cit:ots} Arandjelović, Relja, and Andrew Zisserman. "Objects that Sound." arXiv preprint arXiv:1712.06651 (2017). Accessible from: \url{https://arxiv.org/abs/1712.06651}
+  \bibitem[1]{cit:ots} 1. Arandjelović, Relja, and Andrew Zisserman. "Objects that Sound." arXiv preprint arXiv:1712.06651 (2017). Accessible from: \url{https://arxiv.org/abs/1712.06651}
   
-  \bibitem[2]{cit:l3} Arandjelovic, Relja, and Andrew Zisserman. "Look, listen and learn." 2017 IEEE International Conference on Computer Vision (ICCV). IEEE, 2017. Accessible from: \url{https://arxiv.org/abs/1705.08168}
+  \bibitem[2]{cit:l3} 2. Arandjelovic, Relja, and Andrew Zisserman. "Look, listen and learn." 2017 IEEE International Conference on Computer Vision (ICCV). IEEE, 2017. Accessible from: \url{https://arxiv.org/abs/1705.08168}
 \end{thebibliography}
 \end{frame}
  
