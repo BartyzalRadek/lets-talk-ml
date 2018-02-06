@@ -221,15 +221,26 @@ Both had better performance on AVC task: 85\% vs AVE-Net 82\% vs $L^3$ 82\% but 
 
 \end{frame}
 %--------- END Frame 9 -------------
-\begin{frame}{ResNets reminder}
+\begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
 
 \end{frame}
 %--------- END Frame 10 -------------
-\begin{frame}{BAN ResNets}
+\begin{frame}{Results}
 
 \end{frame}
 %--------- END Frame 11 -------------
-\begin{frame}{BAN Results}
+\begin{frame}{Sampling of negative pairs}
+
+\begin{itemize}
+\item Positive pair is a frame and one second of audio with the frame in the middle.
+\item Videos have 25fps.
+\item Positive audio samples start at multiples of 0.04s.
+\item Getting a negative audio pair randomly allows the network to cheat. It recognizes that negative samples do not start at multiples of 0.04.
+\item Cheating allowed 87.6\% vs correct 81.9\% at AVC task.
+\item Solution = sample negative audio samples also at the multiples of 0.04.
+\end{itemize}
+ 
+
 
 
 \end{frame}
