@@ -148,7 +148,7 @@ Limitations:
 \begin{frame}{Previous work - $L^3$}
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/ave-net}
-\caption{$L^3$ vs AVE-Net.}
+\caption{$L^3$ and AVE-Net descriptions.}
 \end{figure}
 
 \end{frame}
@@ -173,17 +173,45 @@ the two features are deemed not to correspond.
 %--------- END Frame 5 -------------
 \begin{frame}{Audio-Visual Embedding Network (AVE-Net)}
 
- 
+\begin{itemize}
+\item The single
+value that summarizes whether the image and the audio correspond,
+forces the two embeddings to be aligned.
+\item Use of the distance during training makes the features “aware” of the distance metric,
+therefore making them amenable to retrieval.
+\item Entire network trained from scratch.
+\item Parameter-free euclidean distance.
+\end{itemize}
+
 
 \end{frame}
 %--------- END Frame 6 -------------
-\begin{frame}{Extending the AVE-Net}
+\begin{frame}{Results}
+\begin{block}{normalized discounted cumulative gain (nDCG)}
+Measures quality of the ranked list of the top k retrieved items.
+\end{block}
 
+Each item in the test set is used as a query and the average \detokenize{nDCG@30} is reported.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/results}
+\caption{"Our AVENet
+beats all baselines convincingly." \cite{cit:ots} Yeah sure...}
+\end{figure}
 
 \end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
+\begin{frame}{Extending the AVE-Net}
 
+Extensions:
+\begin{itemize}
+\item use 25 frames instead of 1
+\item add 10s of optical flow to the 1 frame
+\end{itemize}
+
+\vfill
+
+Both had better performance on AVC task: 85\% vs AVE-Net 82\% vs $L^3$ 82\% but it does not translate into better crossmodal retrieval scores.
 
 \end{frame}
 %--------- END Frame 8 -------------
