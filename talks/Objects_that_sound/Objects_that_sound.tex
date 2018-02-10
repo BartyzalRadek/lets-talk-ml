@@ -160,7 +160,7 @@ Changes compared to $L^3$:
 \item L2 normalization on top of them
 \item 128-D embedding out of each sub-network
 \item euclidean distance of the normalized embeddings
-\item 1 layer followed by softmax 
+\item 1 FC layer followed by softmax 
 \end{enumerate}
 
 \vfill
@@ -217,25 +217,23 @@ Both had better performance on AVC task: 85\% vs AVE-Net 82\% vs $L^3$ 82\% but 
 %--------- END Frame 8 -------------
 \begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
 
-local region-level image descriptors are extracted
-on a spatial grid and a similarity score is computed between
-the audio embedding and each of the vision descriptors
-
-\begin{itemize}
-\item 14x14 grid of local 128-D visual embeddings
-\item 14x14 distances to the single 128-D audio embedding
-\item 
-\end{itemize}
-
-
+%image of the architecture
 
 \end{frame}
 %--------- END Frame 9 -------------
 \begin{frame}{Audio-Visual Object Localization (AVOL-Net)}
-
+\begin{enumerate}
+\item 14x14 grid of local 128-D visual embeddings
+\item 14x14 distances to the single 128-D audio embedding
+\item calibration FC layer turned into a 1x1 Fully Convolutional layer
+\item convolutional softmax producing image-audio correspondence scores
+\item max correspondence score is used for the training by AVC task
+\end{enumerate}
 \end{frame}
 %--------- END Frame 10 -------------
 \begin{frame}{Results}
+
+%image of some results
 
 \end{frame}
 %--------- END Frame 11 -------------
