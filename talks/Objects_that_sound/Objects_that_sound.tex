@@ -19,15 +19,12 @@
 \usepackage{color}
 \usepackage{tikz}
 \usepackage{url}
-\hypersetup{
-    colorlinks,
-    citecolor=blue,
-    filecolor=blue,
-    linkcolor=blue,
-    urlcolor=blue
-}
 
-\usetheme{Warsaw}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usetheme{Boadilla}
+
 \setbeamertemplate{headline}{}
 \newcommand*\oldmacro{}%
 \let\oldmacro\insertshorttitle%
