@@ -263,7 +263,7 @@ All experiments on: CIFAR-100 (100 classes each containing 600 32x32 colour imag
 \begin{itemize}
 \item Add skip-connection that bypasses the non-linear transformations with an identity function.
 \item Identity function and the output of previous layer are combined by summation, which may impede the information flow in the network.
-\item "Thin and deep" = 1000+ layers, 
+\item "Thin and deep" = small number of filters, 1000+ layers
 \end{itemize}
 
 \begin{block}{Diminishing feature reuse}
@@ -287,6 +287,25 @@ small contribution to the final goal
 \caption{Various residual blocks used in the paper. Batch normalization and ReLU precede
 each convolution (omitted for clarity). \cite{cit:resnet}}
 \end{figure}
+\end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{Wide ResNet}
+
+Multiply the number of filters in each convolution layer:
+\begin{itemize}
+\item basic = $3 \times 3$, 16 filters
+\item wide = $3 \times 3$, 16 filters $\times$ k
+\end{itemize}
+And reduce the number of layers to keep the number of parameters the same.
+
+\begin{itemize}
+\item wide 16-layer deep network has the same accuracy as a 1000-layer thin deep network and a comparable
+number of parameters, although being several times faster to train
+\item wide networks are trained faster because the added convolution filters are easily parallelized on GPUs
+\end{itemize}
+
+
+
 \end{frame}
 %--------- END Frame 9 -------------
 \begin{frame}{ResNet vs DenseNet}
