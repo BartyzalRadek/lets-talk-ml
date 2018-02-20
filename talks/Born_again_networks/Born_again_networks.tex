@@ -123,7 +123,7 @@ Training student = minimize weighted average of:
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/distilled_result}
-\caption{DNN acoustic models used in Automatic Speech Recognition. Distilled model trained by an ensemble of experts performs better than the baseline. \cite{cit:distill}}
+\caption{DNN acoustic models used in Automatic Speech Recognition. Distilled model trained by an ensemble of models performs better than the baseline. \cite{cit:distill}}
 \end{figure}
 
 \end{frame}
@@ -164,16 +164,65 @@ Averaging the prediction of multiple generations of BANs.
 
 \end{frame}
 %--------- END Frame 6 -------------
+\begin{frame}{Dense Convolutional Network (DenseNet) }
+
+For each layer, the feature-maps of all preceding layers are
+used as inputs.\\
+The received features are concatenated not added like in ResNet.
+
+\vfill
+
+Advantages:
+
+\begin{itemize}
+\item alleviate the vanishing-gradient problem
+\item strengthen feature propagation
+\item encourage feature reuse
+\item reduce the number of parameters - hmm how?
+\item require less computation to achieve high performance
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 6 -------------
 \begin{frame}{DenseNets reminder: Dense block }
 
 \begin{figure}[h]
-\includegraphics[width=\textwidth]{img/denseBlock}
-%\caption{Dense block \cite{cit:ban}}
+\includegraphics[scale=0.4]{img/denseBlock}
+\caption{A 5-layer dense block with a growth rate of k = 4.
+Each layer takes all preceding feature-maps as input.
+ \cite{cit:ban}}
 \end{figure}
 
 \end{frame}
+%--------- END Frame 6 -------------
+\begin{frame}{DenseNets reducing number of parameters }
+
+In classic Feed Forward CNN each layer:
+
+\begin{itemize}
+\item receives information (= state) from the previous layer
+\item modifies the state
+\item keeps the information that needs to be passed on
+\item sends the whole state to the next layer
+\end{itemize}
+
+\vfill
+
+In DenseNet each layer:
+
+\begin{itemize}
+\item explicitly differentiates between information that
+is added to the network and information that is preserved
+\item is very narrow (e.g. 12 filters)
+\item receives all the previous knowledge
+\item adds small amount to the "collective knowledge"
+
+\end{itemize}
+
+
+\end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{DenseNets reminder: Deep DenseNet }
+\begin{frame}{Deep DenseNet }
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/denseNet}
@@ -269,7 +318,7 @@ Ensemble SOTA under the same conditions:
   
   \bibitem[5]{cit:distill} 5. Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015). Accessible from: \url{https://arxiv.org/pdf/1503.02531.pdf}
   
-  \bibitem[6]{cit:densenet} 6. Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/pdf/1608.06993.pdf}
+  \bibitem[6]{cit:densenet} 6. Huang, Gao, et al. "Densely connected convolutional networks." arXiv preprint arXiv:1608.06993 (2016). Accessible from: \url{https://arxiv.org/abs/1608.06993}
   
   \bibitem[7]{cit:resnet} 7. Zagoruyko, Sergey, and Nikos Komodakis. "Wide residual networks." arXiv preprint arXiv:1605.07146 (2016). Accessible from: \url{https://arxiv.org/abs/1605.07146}
 \end{thebibliography}
