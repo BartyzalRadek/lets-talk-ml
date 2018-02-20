@@ -166,9 +166,13 @@ Averaging the prediction of multiple generations of BANs.
 %--------- END Frame 6 -------------
 \begin{frame}{Dense Convolutional Network (DenseNet) }
 
-For each layer, the feature-maps of all preceding layers are
-used as inputs.\\
-The received features are concatenated not added like in ResNet.
+\begin{itemize}
+\item For each layer, the feature-maps of all preceding layers are
+used as inputs.
+\item The received feature maps are concatenated not added like in ResNet.
+\item Growth rate (k) = number of feature maps per layer in the dense block.
+\item Last layer of block has $k_0 + k \times (L - 1)$ feature maps.
+\end{itemize}
 
 \vfill
 
@@ -176,15 +180,14 @@ Advantages:
 
 \begin{itemize}
 \item alleviate the vanishing-gradient problem
-\item strengthen feature propagation
-\item encourage feature reuse
 \item reduce the number of parameters - hmm how?
-\item require less computation to achieve high performance
+\item dense connections have a regularizing effect = reduce overfitting
+\item promote feature reuse
 \end{itemize}
 
 \end{frame}
 %--------- END Frame 6 -------------
-\begin{frame}{DenseNets reminder: Dense block }
+\begin{frame}{DenseNet: Dense block }
 
 \begin{figure}[h]
 \includegraphics[scale=0.4]{img/denseBlock}
@@ -214,8 +217,8 @@ In DenseNet each layer:
 \item explicitly differentiates between information that
 is added to the network and information that is preserved
 \item is very narrow (e.g. 12 filters)
-\item receives all the previous knowledge
-\item adds small amount to the "collective knowledge"
+\item receives all the previous feature-maps unchanged
+\item adds small set of feature-maps to the "collective knowledge"
 
 \end{itemize}
 
@@ -224,6 +227,12 @@ is added to the network and information that is preserved
 %--------- END Frame 7 -------------
 \begin{frame}{Deep DenseNet }
 
+\begin{itemize}
+\item Feature map dimensions must stay the same in one dense block.
+\item Pooling is an important part of CNNs.
+\item Put pooling between the dense blocks.
+\end{itemize}
+
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/denseNet}
 \caption{A deep DenseNet with three dense blocks. The layers between two adjacent blocks are referred to as transition layers and change
@@ -231,6 +240,7 @@ feature-map sizes via convolution and pooling. \cite{cit:densenet}}
 \end{figure}
 
 \end{frame}
+
 %--------- END Frame 8 -------------
 \begin{frame}{BAN DenseNets Experiments }
 
@@ -249,21 +259,51 @@ All experiments on: CIFAR-100 (100 classes each containing 600 32x32 colour imag
 
 \end{frame}
 %--------- END Frame 9 -------------
-\begin{frame}{ResNets reminder}
+\begin{frame}{Residual Networks (ResNet)}
+\begin{itemize}
+\item Add skip-connection that bypasses the non-linear transformations with an identity function.
+\item Identity function and the output of previous layer are combined by summation, which may impede the information flow in the network.
+\item "Thin and deep" = 1000+ layers, 
+\end{itemize}
+
+\begin{block}{Diminishing feature reuse}
+Gradient flowing through skip connections is not forced to go through residual block weights $\implies$ 
+
+\begin{itemize}
+\item few blocks learn useful representations 
+\item many blocks share very little information with
+small contribution to the final goal
+\end{itemize}
+\end{block}
+
+
+
+
+\end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{ResNet: Residual block}
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/resnet_blocks}
 \caption{Various residual blocks used in the paper. Batch normalization and ReLU precede
 each convolution (omitted for clarity). \cite{cit:resnet}}
 \end{figure}
 \end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{ResNet vs DenseNet}
+
+\end{frame}
 %--------- END Frame 10 -------------
 \begin{frame}{BAN ResNets}
 BAN-ResNets:
 \begin{itemize}
 \item trained by DenseNet 90-60 teacher
+\item student always shares the first and last layer with its
+teacher
+\item dense blocks replaced by residual blocks
 \item baseline = wide-ResNet28 \cite{cit:resnet}
 \item tested multiple nets with different number of units per block
 \item all benefit from BAN training
+
 \end{itemize}
 
 \vfill
