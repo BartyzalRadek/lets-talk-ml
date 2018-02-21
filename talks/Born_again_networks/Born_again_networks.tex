@@ -276,9 +276,6 @@ small contribution to the final goal
 \end{itemize}
 \end{block}
 
-
-
-
 \end{frame}
 %--------- END Frame 9 -------------
 \begin{frame}{ResNet: Residual block}
@@ -309,8 +306,40 @@ number of parameters, although being several times faster to train
 \end{frame}
 %--------- END Frame 9 -------------
 \begin{frame}{ResNet vs DenseNet}
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+ResNet
+\begin{itemize}
+\item summation
+\item classic = very deep and thin
+\item wide = less layers and more filters
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+DenseNet
+\begin{itemize}
+\item concatenation
+\item narrow = thin layers = small number of filters
+\item later layers access the features from previous layers directly
+\item feature reuse $\implies$ 
+
+more compact network $\implies$
+
+higher parameter efficiency
+\end{itemize}
+\end{column}
+\end{columns}
 
 \end{frame}
+%--------- END Frame 10 -------------
+\begin{frame}{ResNet vs DenseNet: parameter efficiency}
+\begin{figure}[h]
+\includegraphics[scale=0.6]{img/denseNet-resNet}
+\caption{DenseNet-BC vs pre-activation ResNet. \cite{cit:densenet}}
+\end{figure}
+\end{frame}
+
 %--------- END Frame 10 -------------
 \begin{frame}{BAN ResNets}
 BAN-ResNets:
