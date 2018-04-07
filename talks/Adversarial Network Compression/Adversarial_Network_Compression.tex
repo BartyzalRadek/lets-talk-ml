@@ -128,10 +128,26 @@ Training student = minimize weighted average of:
 
 \end{frame}
 %--------- END Frame 4 -------------
+\begin{frame}{Adversarial Network Compression}
+
+\begin{itemize}
+\item teacher is trained on hard labels and then frozen
+\item student trained only on soft targets = no labels
+\item teacher and student have the same architecture
+\item architectures are CNN ResNets
+\item using GAN discriminator to align the teacher-student distributions
+\item last layer (before logits) features are given to discriminator
+\item L2 loss of logits from student VS teacher forces student to mimic teacher 
+\end{itemize}
+
+\begin{block}{Logits}
+Unscaled log-probability values = before the softmax
+activation function.
+\end{block}
 
 
-
-
+\end{frame}
+%--------- END Frame 5 -------------
 \begin{frame}{Adversarial Network Compression}
 
 \begin{figure}[h]
@@ -139,8 +155,14 @@ Training student = minimize weighted average of:
 \end{figure}
 
 \end{frame}
+%--------- END Frame 6 -------------
+\begin{frame}{Adversarial Network Compression}
 
-%--------- END Frame 9 -------------
+
+
+
+\end{frame}
+%--------- END Frame 6 -------------
 \begin{frame}{Residual Networks (ResNet)}
 \begin{itemize}
 \item Add skip-connection that bypasses the non-linear transformations with an identity function.
