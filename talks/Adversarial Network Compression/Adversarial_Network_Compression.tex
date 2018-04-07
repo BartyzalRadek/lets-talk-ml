@@ -194,12 +194,30 @@ activation function.
 
 \end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{Experiments}
-
+\begin{frame}{Experiment: Regularization of Discriminator}
+Goal is to prevent the discriminator
+from dominating the training, while retaining its capacity:
+\begin{itemize}
+\item Standard L1, L2: No guarantee that the D will become weaker w.r.t student.
+\item (New) \textbf{Adversarial samples for D:} Update D with student samples labeled as teacher's. (discriminator is normally updated only with correct labels) \\
+= longer game between student and D \\
+= more gradient updates for student \\
++ same adversarial samples to update both student and D 
+\end{itemize}
 
 
 
 \end{frame}
+%--------- END Frame 7 -------------
+\begin{frame}{Experiment: Regularization of Discriminator}
+
+\begin{figure}[h]
+\includegraphics[scale=0.45]{img/regularization}
+\end{figure}
+
+\end{frame}
+
+
 %--------- END Frame 6 -------------
 \begin{frame}{Residual Networks (ResNet)}
 \begin{itemize}
