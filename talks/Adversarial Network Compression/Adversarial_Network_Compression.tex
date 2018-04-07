@@ -176,7 +176,7 @@ activation function.
 \begin{itemize}
 \item $f_t^k(x)$, $f_s^l(x)$ = teacher, student features for input $x$
 \item $p_{teacher}(x)$ and $p_{student}(x)$ = feature distributions
-\item noise input $z$ = dropout in the student, active only during the student update
+\item noise input $z$ = dropout in the student
 \end{itemize}
 
 \begin{figure}[h]
@@ -189,6 +189,7 @@ activation function.
 
 \begin{figure}[h]
 \includegraphics[scale=0.35]{img/argmin}
+\caption{$L_{data}$ forces student to exactly copy $f_t(x)$ not just the distribution $p_{teacher}$.}
 \end{figure}
 
 \end{frame}
