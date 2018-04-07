@@ -135,8 +135,10 @@ Training student = minimize weighted average of:
 \item Discriminator D tries to distinguish real images from G's images
 \end{itemize}
 
+
 \begin{figure}[h]
-\includegraphics[width=\textwidth]{img/cGAN}
+\includegraphics[width=\textwidth]{img/GAN}
+\caption{Training procedure of GAN. \cite{cit:gan}}
 \end{figure}
 
 \end{frame}
@@ -169,9 +171,29 @@ activation function.
 
 \end{frame}
 %--------- END Frame 6 -------------
+\begin{frame}{Training}
 
+\begin{itemize}
+\item $f_t^k(x)$, $f_s^l(x)$ = teacher, student features for input $x$
+\item $p_{teacher}(x)$ and $p_{student}(x)$ = feature distributions
+\item noise input $z$ = dropout in the student, active only during the student update
+\end{itemize}
+
+\begin{figure}[h]
+\includegraphics[scale=0.5]{img/GAN_distill_train}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[scale=0.4]{img/l_data}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[scale=0.35]{img/argmin}
+\end{figure}
+
+\end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{Adversarial Network Compression}
+\begin{frame}{Experiments}
 
 
 
@@ -212,9 +234,9 @@ each convolution (omitted for clarity). \cite{cit:resnet}}
 
 \begin{thebibliography}{0}
 
-  \bibitem[1]{cit:ban} 1. Belagiannis, Vasileios, Azade Farshad, and Fabio Galasso. "Adversarial Network Compression." arXiv preprint arXiv:1803.10750 (2018). Accessible from: \url{https://arxiv.org/abs/1803.10750}
+  \bibitem[1]{cit:anc} 1. Belagiannis, Vasileios, Azade Farshad, and Fabio Galasso. "Adversarial Network Compression." arXiv preprint arXiv:1803.10750 (2018). Accessible from: \url{https://arxiv.org/abs/1803.10750}
   
-  \bibitem[2]{cit:stat} 2. Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231. Accessible from: \url{https://projecteuclid.org/download/pdf_1/euclid.ss/1009213726\%20}
+  \bibitem[2]{cit:gan} 2. Goodfellow, Ian, et al. "Generative adversarial nets." Advances in neural information processing systems. 2014. Accessible from: \url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
   
   \bibitem[3]{cit:ensembles} 3. Hansen, Lars Kai, and Peter Salamon. "Neural network ensembles." IEEE transactions on pattern analysis and machine intelligence 12.10 (1990): 993-1001.
 \end{thebibliography}
