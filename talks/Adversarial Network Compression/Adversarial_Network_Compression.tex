@@ -47,7 +47,7 @@
 \begin{document}
 \title{Adversarial Network Compression}  
 \author{Radek Bartyzal}
-\date{\today} 
+\date{18. 4. 2018} 
 \institute{Let's talk ML in Prague}
 
 \frame{\titlepage} 
@@ -151,7 +151,7 @@ Training student = minimize weighted average of:
 \item teacher and student have the same architecture
 \item architectures are CNN ResNets
 \item using GAN discriminator to align the teacher-student distributions
-\item last layer (before logits) features are given to discriminator
+\item last layer features (before logits) are given to D = richer signal than logits
 \item L2 loss of logits from student VS teacher forces student to mimic teacher 
 \end{itemize}
 
@@ -194,7 +194,7 @@ activation function.
 
 \end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{Experiment: Regularization of Discriminator}
+\begin{frame}{Regularization of Discriminator}
 Goal is to prevent the discriminator
 from dominating the training, while retaining its capacity:
 \begin{itemize}
@@ -204,15 +204,41 @@ from dominating the training, while retaining its capacity:
 = more gradient updates for student \\
 + same adversarial samples to update both student and D 
 \end{itemize}
-
-
-
 \end{frame}
 %--------- END Frame 7 -------------
-\begin{frame}{Experiment: Regularization of Discriminator}
+\begin{frame}{Regularization of Discriminator}
 
 \begin{figure}[h]
 \includegraphics[scale=0.45]{img/regularization}
+\caption{Adversarial samples for D clearly outperform standard regularization techniques on tested tasks.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 7 -------------
+\begin{frame}{Evaluation on CIFAR}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/cifar_dropout}
+\end{figure}
+
+\end{frame}
+
+%--------- END Frame 7 -------------
+\begin{frame}{Evaluation on CIFAR}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/cifar_compare}
+\caption{Comparison with methods in related works.}
+\end{figure}
+
+\end{frame}
+
+%--------- END Frame 7 -------------
+\begin{frame}{Evaluation on ImageNet}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/imagenet_compare}
+\caption{ResNet-50 clearly benefits from from knowledge distillation.}
 \end{figure}
 
 \end{frame}
