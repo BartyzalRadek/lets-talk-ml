@@ -1,0 +1,296 @@
+\documentclass[12pt, titlepage]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} %graphics files inclusion
+% \usepackage{subfig} %subfigures
+\usepackage{amsmath} %advanced maths
+\usepackage{amssymb} %additional math symbols
+\usepackage{dsfont}  %contains \mathds{1}
+\usepackage{algpseudocode}
+\usepackage{url}
+
+\usepackage{dirtree} %directory tree visualisation
+
+\usepackage[draft]{todonotes}   % notes showed
+
+\usepackage[ruled,vlined]{algorithm2e}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\usepackage{xcolor, colortbl}
+\usepackage{pdfpages}
+
+\newcommand{\lnorm}[1]{\left\lVert#1\right\rVert^2}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\algnewcommand\algorithmicforeach{\textbf{for each:}}
+\algnewcommand\ForEach{\item[ \algorithmicforeach]}
+\author{Radek Bartyzal}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vfill
+    {\bfseries\Huge
+        Adam: a method for stochastic optimization \\
+    }    
+        \vskip1cm
+        
+    {\bfseries\Large 
+    Czech Technical University in Prague\\ 
+    Faculty of Informatics\\ 
+    \vskip1cm
+    Radek Bartyzal\\
+    }    
+    \vskip1cm
+    October 21, 2018
+    \vfill
+
+    \vfill
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+
+\section{Prerequisites}
+The following text assumes that the reader is familiar with these terms:
+
+\begin{itemize}
+\item Neural Networks: Chapter 1 of \cite{cit:nn} 
+\item Backpropagation: Chapter 2 of \cite{cit:nn}
+\end{itemize}
+
+\section{Optimization of neural networks}\label{sec:optim}
+Training of a neural network consists of minimization of its loss function $L$. An example of such loss function is:
+
+\begin{tabbing}
+$w$ = weights \hspace{40mm} \= $b$ = biases\\
+$n$ = number of inputs \> $x$ = one input\\
+$a$ = output of network for $x$\\
+$y(x)$ = desired output for $x$
+\end{tabbing}
+$$
+L(w,b) = \frac{1}{2n} \sum_x{ \| y(x) - a \|^2}
+$$
+
+By using the backpropagation algorithm we are able to calculate the gradient of the loss function with regards to every parameter. We can use this gradient to update the parameters.
+They are updated by a taking a small step in the opposite direction of the gradient since that is the direction in which the loss function decreases the most in its value. The size of the step is controlled by a parameter $\eta$ called \textit{learning rate}. This is a general description of a \textit{Gradient Descent} algorithm, however there are many different ways how to calculate the actual step and we will present the ones most relevant to this work.
+
+\section{Gradient Descent variants}\label{sec:sgd_variants}
+There are three variants of the basic gradient descent algorithm and all of them share the following inputs:
+
+\begin{equation}
+\begin{aligned}
+\theta_0 &\quad \text{Initial parameters}\\
+N &\quad \text{Number of training examples}\\
+x_i,\ \forall i <  N &\quad \text{Training examples}\\
+\hat{y}_i,\ \forall i < N &\quad \text{Labels for the training examples}\\
+T &\quad \text{Number of epochs}
+\end{aligned}
+\end{equation}
+
+
+\begin{itemize}
+\item \textbf{Batch Gradient Descent (BGD)} shown as Algorithm \ref{alg:BGD} calculates the step as an average of gradients over all the training examples. This approach unfortunately does not scale well because from a certain point you cannot load the whole dataset into memory making each single update extremely slow. Another problem is that it does not allow \textit{online learning} meaning we cannot simply continue training with newly arrived data points.
+
+\begin{algorithm}
+  \label{alg:BGD}
+  \caption{Batch Gradient Descent}
+  \DontPrintSemicolon
+  \For{$t\gets 1$ \KwTo $T$}
+  {
+  $g = 0$\;
+  \ForEach{$i \in \text{dataset}$}
+    {
+     $g = g + \nabla L(\hat{y}_i,f(\theta_{t-1}, x_i))$\;
+    }
+  $g = \frac{1}{N} g$\;
+  $\theta_t = \theta_{t-1} - \eta g$
+  }
+\end{algorithm}
+
+\item \textbf{Stochastic Gradient Descent (original SGD)} shown as Algorithm \ref{alg:SGD} updates the parameters with the gradient of every training example sequentially. The training data is shuffled between epochs to add an element of randomness resulting in increased chances of finding a better local minimum. This approach alleviates both mentioned problems of BGD, unfortunately it introduces its own one. Due to the frequent updates, the global loss tends to have a very high variance which may help it escape local minima but it also complicates convergence. 
+
+\begin{algorithm}
+  \label{alg:SGD}
+  \caption{Stochastic Gradient Descent}
+  \DontPrintSemicolon
+  $\theta = \theta_0$\;
+  \For{$t\gets 1$ \KwTo $T$}
+  {
+  $\mathit{shuffle(dataset)}$\;
+  \ForEach{$i \in \text{dataset}$}
+    {
+     $g = \nabla L(\hat{y}_i,f(\theta, x_i))$\;
+     $\theta = \theta - \eta g$\;
+    }
+  }
+\end{algorithm}
+
+\item \textbf{Mini-batch Stochastic Gradient Descent (SGD)} described in Algorithm \ref{alg:mini_SGD} is the logical combination of the two mentioned methods. By updating the parameters after each mini batch of size $B$ the algorithm achieves significantly less variance of the loss while keeping the advantage of frequent updates. It also leverages the fast matrix operations available on current graphical processors. The new hyperparameter $B$ can be selected based on the size of the dataset and available memory to strike a balance between speed and variance. This algorithm is generally referred to as SGD because due to the strong disadvantages of both BGD and original SGD they are very rarely used.
+
+\begin{algorithm}
+  \label{alg:mini_SGD}
+  \caption{Mini-batch Stochastic Gradient Descent}
+  \DontPrintSemicolon
+  $\theta = \theta_0$\;
+  \For{$t\gets 1$ \KwTo $T$}
+  {
+  $\mathit{shuffle(dataset)}$\;
+  \ForEach{$\text{mini\_batch} \in \text{dataset}$}
+  {
+  $g = 0$\;
+  \ForEach{$i \in \text{mini\_batch}$}
+    {
+     $g = g + \nabla L(\hat{y}_i,f(\theta, x_i))$\;
+    }
+  $g = \frac{1}{B} g$\;
+  $\theta = \theta - \eta g$
+  }
+  }
+\end{algorithm}
+\end{itemize}
+
+Even though the SGD fixes the mentioned imperfections, it still has two significant problems:
+
+\begin{itemize}
+\item Finding a good learning rate can prove to be difficult, but we can offload this task to a \textit{learning rate scheduler} that changes it during training based both on elapsed time steps and past performance  \cite{darken1992learning}. Although the adaptable learning rate performs much better than a constant one, the fact that it is identical for all parameters causes problems in situation where each example while having a high dimension has only few non-zero features. Therefore some features occur more frequently than others which is not reflected in the applied learning rate. That results in slower updates to the less frequent features.
+
+\item The loss function of a deep neural network is undoubtedly very complex which brings many challenges to optimization. The most profound difficulty in optimizing such a high dimensional non-convex function is however believed to stem from an extensive number of saddle points surrounded by large plateaus with high error \cite{dauphin2014identifying}. This is where the loss function increases in some dimensions while it is constant or decreasing in other dimensions. A simple three dimensional example can be a slowly descending valley with steep slopes on both sides. The problem stems from the small decrease in value in the one dimension that actually leads to a minimum. An intuitive explanation of what will happen is that the SGD will keep jumping across the valley while moving very slowly in the desired direction.
+\end{itemize} 
+
+The following methods alleviate one or both of the described issues \cite{ruder2016overview}.
+
+\section{AdaGrad}
+AdaGrad is an adaptive gradient method attempting to solve the issue of some features appearing less frequently than others \cite{duchi2011adaptive}. The general idea is for the learner to give larger weight to infrequent features when they appear. 
+
+This is implemented by taking note of the past gradient updates and using the sum of the squared past gradients to divide the actual learning rate. 
+
+We start with a gradient of the loss function $L$ with respect to a parameter $i$ at time $t$:
+
+\begin{equation}\label{eq:gradient}
+g_{t,i} = \nabla_{\theta} L(\theta_{t,i})
+\end{equation}
+
+The classic mini-batch SGD update would look like this:
+
+\begin{equation}\label{eq:sqd_update}
+\theta_{t+1,i}^{SGD} = \theta_{t,i} - \eta g_{t,i}
+\end{equation}
+
+However the AdaGrad update leverages the past gradient update information to adaptively change the learning rate for each of the parameters separately:
+
+\begin{equation}\label{eq:adagrad_update}
+\theta_{t+1,i}^{AdaGrad} = \theta_{t,i} - \frac{\eta}{\sqrt{ \sum_{\tau=1}^t{g_{\tau,i}^2}} + \epsilon} g_{t,i}
+\end{equation}
+
+The epsilon is used to prevent division by an extremely small number. Even though this new update rule nicely adapts to each parameter, their learning rates keep getting smaller with increasing time steps. This is caused by the sum of squared gradients that can only increase with time resulting in a smaller and smaller effective learning rate, possibly reaching zero and stopping the training entirely. Another issue is the sensitivity to the initial setting of the learning rate. If the gradients are too large at the beginning, the parameter updates will be small for the rest of the training \cite{zeiler2012adadelta}.
+
+
+\section{RMSProp and AdaDelta}
+Both RMSProp and AdaDelta have been invented around the same time to solve the mentioned issue of AdaGrad's diminishing learning rate. The RMSProp has been introduced by G. Hinton in his course at University of Toronto \cite{rmsprop}. It is slightly simpler than AdaDelta \cite{zeiler2012adadelta} while using the same idea which is why we will discuss it here.
+
+The central idea is to use a decaying running average of past squared gradients representing gradients from a certain time window instead of using all of them. This ensures that the training will not slow down after a large number of updates.
+
+The running average of past gradients can be effectively calculated as:
+
+\begin{equation}\label{eq:running_avg}
+\mathbb{E}[g^2]_t = \gamma \mathbb{E}[g^2]_{t-1} + (1 - \gamma) g_t^2
+\end{equation}
+
+Then we just replace the summation term in the AdaGrad update rule with this running average estimate:
+
+\begin{equation}\label{eq:rmsprop_update}
+\theta_{t+1}^{RMSProp} = \theta_{t} - \frac{\eta}{\sqrt{\mathbb{E}[g^2]_t} + \epsilon} g_{t}
+\end{equation}
+
+The decay rate $\gamma$ is recommended to be set to $0.9$ while a good default learning rate is $0.001$. These methods are generally much less sensitive to a different initial learning rates making hyper-parameter tuning easier \cite{zeiler2012adadelta}.
+
+\section{Adam}
+The Adam (adaptive moment estimator) method is an improvement of the previously mentioned RMSProp with an addition of an estimate of the first order momentum \cite{kingma2014adam}.
+
+Just as the RMSProp the Adam calculates the decaying running average of the squared past gradients, here called $v_t$. It also calculates the running average of the gradients themselves, called $m_t$ the same way. The $m_t$ and $v_t$ estimate the first and second order moments of the gradient corresponding to the mean and the uncentered variance.
+
+\begin{equation}\label{eq:adam_moments}
+\begin{aligned}
+m_t &= \beta_1 m_{t-1} + (1 - \beta_1) g_t\\
+v_t &= \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
+\end{aligned}
+\end{equation}
+
+The $m_t$ and $v_t$ are unfortunately biased toward zero at the start of training due to their initialization to zero vectors. To correct that bias the Adam algorithm divides the moment estimates with a time sensitive term approaching $1$ with increasing number of time steps:
+
+\begin{equation}\label{eq:adam_moments}
+\begin{aligned}
+\hat{m_t} &= \frac{m_t}{(1 - \beta_1^t)}\\
+\hat{v_t} &= \frac{v_t}{(1 - \beta_2^t)}
+\end{aligned}
+\end{equation}
+
+
+These bias corrected moment estimates are then used in the actual update rule similarly to the RMSProp and AdaDelta algorithms:
+
+\begin{equation}\label{eq:adam_update}
+\theta_{t+1}^{Adam} = \theta_{t} - \frac{\eta}{\sqrt{v_t} + \epsilon} m_t
+\end{equation}
+
+The recommended default values for the hyper-parameters are $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}$.
+The positive aspects of the second order moment dividing the learning rate have been explained in the previous sections. The addition of the first order moment can be understood as a momentum term. It aims to solve the problem SGD has with getting out of saddle points. 
+The effects of momentum can be presented on the example with the slowly descending valley given at the end of Section \ref{sec:sgd_variants}. 
+
+If we imagine a ball without momentum in such valley, it will keep going up the opposing sides while slowly moving through the valley. If we add momentum to the ball, it will dampen its oscillation while increasing the speed of movement in the direction of consistent decrease in function value. We can compare that to adding weight to the ball. 
+
+Transferring the example to the effects on optimization, the updates in the dimensions where the gradient directions keep changing will be smaller while the updates in the dimensions that are consistently going a certain direction will become incrementally larger.
+
+A follow-up research into Adam has uncovered several convergence issues and possible areas of improvement which led to the introduction of new versions such as:
+
+\begin{itemize} 
+\item \textbf{NAdam:} Adapt the momentum term with the Nesterov accelerated gradient method \cite{dozat2016incorporating}.
+\item \textbf{AdamW:} Claims to fix the weight decay calculation\cite{loshchilov2017fixing}.
+\item \textbf{AmsGrad:} Finds errors in the proof of Adam's convergence and claims to improve it by introducing AmsGrad algorithm \cite{reddi2018convergence}.
+\end{itemize}
+
+To the contrary of the numerous papers claiming to improve the original Adam algorithm, experimental results show that it in many cases works better or at least as well as its newer variants. While some of them look promising, there is no single variant dominating others at all tested optimization tasks which is why we choose to use the default Adam for all of our experiments \cite{adam-variants}.
+
+
+
+\begin{thebibliography}{0}
+  \bibitem[1]{cit:nn} Nielsen, Michael A. Neural networks and deep learning. Vol. 25. USA: Determination press, 2015.
+  
+  \bibitem[2]{darken1992learning} Darken, Christian, Joseph Chang, and John Moody. "Learning rate schedules for faster stochastic gradient search." Neural Networks for Signal Processing [1992] II., Proceedings of the 1992 IEEE-SP Workshop. IEEE, 1992.
+  
+  \bibitem[3]{dauphin2014identifying} Dauphin, Yann N., et al. "Identifying and attacking the saddle point problem in high-dimensional non-convex optimization." Advances in neural information processing systems. 2014.
+  
+  \bibitem[4]{ruder2016overview} Ruder, Sebastian. "An overview of gradient descent optimization algorithms." arXiv preprint arXiv:1609.04747 (2016).
+  
+  \bibitem[5]{zeiler2012adadelta} Zeiler, Matthew D. "ADADELTA: an adaptive learning rate method." arXiv preprint arXiv:1212.5701 (2012).
+  
+  \bibitem[6]{kingma2014adam} Kingma, Diederik P., and Jimmy Ba. "Adam: A method for stochastic optimization." arXiv preprint arXiv:1412.6980 (2014).
+  
+  \bibitem[7]{dozat2016incorporating} Dozat, Timothy. "Incorporating nesterov momentum into adam." (2016).
+  
+  \bibitem[8]{loshchilov2017fixing} Loshchilov, Ilya, and Frank Hutter. "Fixing weight decay regularization in adam." arXiv preprint arXiv:1711.05101 (2017).
+  
+  \bibitem[9]{reddi2018convergence} Reddi, Sashank J., Satyen Kale, and Sanjiv Kumar. "On the convergence of adam and beyond." (2018).
+  
+  \bibitem[10]{adam-variants} FastAI’s experimental results of Adam variants [online]. \url{http:
+//www.fast.ai/2018/07/02/adam-weight-decay/}, [Online; accessed
+2018-October-21].
+
+  \bibitem[11]{rmsprop} G. Hinton’s lecture introducing RMSProp [online]. \url{http:
+//www.cs.toronto.edu/˜tijmen/csc321/slides/lecture_slides_
+lec6.pdf}, [Online; accessed 2018-October-21].
+
+  \bibitem[12]{duchi2011adaptive} Duchi, John, Elad Hazan, and Yoram Singer. "Adaptive subgradient methods for online learning and stochastic optimization." Journal of Machine Learning Research 12.Jul (2011): 2121-2159.
+
+
+  
+  
+  
+  
+  \end{thebibliography}
+
+
+ 
+\end{document}
