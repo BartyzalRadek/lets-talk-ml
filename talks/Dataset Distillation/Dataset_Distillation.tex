@@ -94,8 +94,12 @@ compactness while suffering only minimal degradation in performance \cite{cit:an
 %--------- END Frame 9 -------------
 \begin{frame}{Problems}
 
-\textbf{Problem:}\\
-Why not just remember the final trained weights instead of the initial ones?
+\textbf{Problem:}
+\begin{itemize}
+\item Why not just remember the final trained weights instead of the initial ones?
+\item If we have fixed init weights the created dataset encodes the information of both training dataset and the init weights = it looks like noise
+\end{itemize}
+
 
 \vfill
 
@@ -143,7 +147,7 @@ are not on the natural image manifold?
 \begin{frame}{Results}
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/uses1}
-\caption{Fixed = sampled from }
+%\caption{Fixed = sampled from }
 \end{figure}
 \end{frame}
 %--------- END Frame 9 -------------
@@ -167,7 +171,32 @@ are not on the natural image manifold?
 %\caption{ \cite{cit:resnet}}
 \end{figure}
 \end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{Experiments}
+
+N = number of synthesized images per category
+
+\textbf{Baselines:}
+\begin{itemize}
+\item \textbf{Random real images}: N randomly sampled training images per
+category.
+\item \textbf{Optimized real images}: We sample sets of real images as above, and choose on the top 20\%
+sets that perform the best
+\item \textbf{k-means}: For each category, we use k-means to extract N cluster centroids
+\item \textbf{Average real images}: We compute the average image of all the images in each category, which
+is reused in different GD steps.
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 9 -------------
+\begin{frame}{Results}
+\begin{figure}[h]
+\includegraphics[width=1.\textwidth]{img/results3}
+\caption{Focus on random init.\linebreak MNIST with only 1 image per class = similar performance to Average image.\linebreak CIFAR with 10 images per class = improvement over baselines.}
+\end{figure}
+\end{frame}
 %--------- END Frame 12 -------------
+
 \begin{frame}{Sources}
 
 \begin{thebibliography}{0}
