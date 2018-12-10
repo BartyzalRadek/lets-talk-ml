@@ -247,11 +247,15 @@ A follow-up research into Adam has uncovered several convergence issues and poss
 
 \begin{itemize} 
 \item \textbf{NAdam:} Adapt the momentum term with the Nesterov accelerated gradient method \cite{dozat2016incorporating}.
-\item \textbf{AdamW:} Claims to fix the weight decay calculation\cite{loshchilov2017fixing}.
+\item \textbf{AdamW:} Claims to fix the weight decay calculation \cite{loshchilov2017fixing}.
 \item \textbf{AmsGrad:} Finds errors in the proof of Adam's convergence and claims to improve it by introducing AmsGrad algorithm \cite{reddi2018convergence}.
 \end{itemize}
 
-To the contrary of the numerous papers claiming to improve the original Adam algorithm, experimental results show that it in many cases works better or at least as well as its newer variants. While some of them look promising, there is no single variant dominating others at all tested optimization tasks which is why we choose to use the default Adam for all of our experiments \cite{adam-variants}.
+To the contrary of the numerous papers claiming to improve the original Adam algorithm, experimental results show that it in many cases works better or at least as well as its newer variants. While some of them look promising, there is no single variant dominating others at all tested optimization tasks \cite{adam-variants}.
+
+\section{Conclusion}
+
+The Adam algorithm remains as one of the best ways to train neural networks. However the mini batch SGD is also still extensively used because it is well understood and achieves very good results with a properly tuned learning rate schedule.
 
 
 
