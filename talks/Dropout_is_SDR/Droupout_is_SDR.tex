@@ -72,7 +72,7 @@ update
 \end{frame}
 
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule}
+\begin{frame}{Stochastic Delta Rule: Motivation}
 
 \begin{itemize}
 \item neural transmissions involve noise
@@ -84,7 +84,7 @@ functions = averaging over many stimulation trials
 
 \end{frame}
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule}
+\begin{frame}{Stochastic Delta Rule: Idea}
 
 \begin{itemize}
 \item each weight $w_{ij}$ = random variable with mean $\mu_{w_{ij}}$ and standard
@@ -102,7 +102,7 @@ sampled on each forward activation
 
 \end{frame}
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule}
+\begin{frame}{Stochastic Delta Rule: Details}
 
 \begin{itemize}
 \item exponential number of potential networks with shared weights
@@ -126,7 +126,41 @@ error surface [Hinton]
 
 
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule}
+\begin{frame}{Stochastic Delta Rule: Update rules}
+
+Forward pass samples weights $w^{*}_{ij}$ from $N(\mu_{w_{ij}},\sigma_{w_{ij}})$:
+\begin{figure}[h]
+\includegraphics[width=0.6\textwidth]{img/init}
+\end{figure}
+
+Classic gradient update to mean:
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{img/update_mu}
+\end{figure}
+
+Bigger error $\implies$ bigger $\sigma$ = increase temperature:
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{img/update_sigma}
+\end{figure}
+
+Continually lower $\sigma$ = lower temperature:
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{img/update_sigma_2}
+\end{figure}
+
+
+
+\end{frame}
+%--------- END Frame 1 -------------
+\begin{frame}{Stochastic Delta Rule: Update rules}
+
+\begin{itemize}
+\item 
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 1 -------------
+\begin{frame}{Stochastic Delta Rule: Update rules}
 
 \begin{itemize}
 \item 
