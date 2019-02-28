@@ -70,30 +70,61 @@ update
 \end{itemize}
 
 \end{frame}
+
+%--------- END Frame 1 -------------
+\begin{frame}{Stochastic Delta Rule}
+
+\begin{itemize}
+\item neural transmissions involve noise
+\item neuron stimulated with same stimuli will never result in the same response
+\item smooth neural rate
+functions = averaging over many stimulation trials
+\item $\implies$ synapse between two neurons could be modeled with a distribution with fixed parameters
+\end{itemize}
+
+\end{frame}
 %--------- END Frame 1 -------------
 \begin{frame}{Stochastic Delta Rule}
 
 \begin{itemize}
 \item each weight $w_{ij}$ = random variable with mean $\mu_{w_{ij}}$ and standard
 deviation $\sigma_{w_{ij}}$
+\item we assume Gaussian but can be other distr.
 \item weight random variable is
 sampled on each forward activation
-\item $\implies$ exponential number of potential networks with shared weights
-\item Both parameters are
-updated according to prediction error
-\item $\implies$ weight noise injections reflecting local history of prediction error and local model averaging
-\item $\implies$ simulated annealing per weight
+
 \end{itemize}
+
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{img/sampling}
+\end{figure}
 
 \end{frame}
 %--------- END Frame 1 -------------
 \begin{frame}{Stochastic Delta Rule}
 
 \begin{itemize}
-\item 
+\item exponential number of potential networks with shared weights
+
+\vfill
+
+\item Both parameters are updated according to prediction error
+\item $\implies$ weight noise injections reflecting local history of prediction error = bigger error $\implies$ bigger $\sigma$
+\item $\implies$ local model averaging
+\item model averaging may smooth out ravines in the
+error surface [Hinton]
+
+\vfill
+
+\item simulated annealing per weight
+\item each weight is updated based on its sampled contribution = gradient is a random variable
+
 \end{itemize}
 
 \end{frame}
+
+
 %--------- END Frame 1 -------------
 \begin{frame}{Stochastic Delta Rule}
 
