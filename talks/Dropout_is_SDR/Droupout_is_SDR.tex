@@ -143,7 +143,7 @@ Bigger error $\implies$ bigger $\sigma$ = increase temperature:
 \includegraphics[width=0.5\textwidth]{img/update_sigma}
 \end{figure}
 
-Continually lower $\sigma$ = lower temperature:
+Exponentially lower $\sigma$ = lower temperature = converge:
 \begin{figure}[h]
 \includegraphics[width=0.5\textwidth]{img/update_sigma_2}
 \end{figure}
@@ -152,26 +152,39 @@ Continually lower $\sigma$ = lower temperature:
 
 \end{frame}
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule: Update rules}
+\begin{frame}{Dropout is Stochastic Delta Rule}
 
 \begin{itemize}
-\item 
+\item Bernoulli random variable over many trials results in a Binomial distribution with mean $np$ and standard deviation $(np(1-p))$. 
+\item The random variable is the number of removals  over learning
+\item Dropout = hidden unit Binomial sampling
 \end{itemize}
+
+\begin{figure}[h]
+\includegraphics[width=0.7\textwidth]{img/dropout_sampling}
+\end{figure}
 
 \end{frame}
 %--------- END Frame 1 -------------
-\begin{frame}{Stochastic Delta Rule: Update rules}
+\begin{frame}{Experiments}
 
 \begin{itemize}
-\item 
+\item DenseNet-40, DenseNet-100, DenseNet-BC 250
+\item original parameters kept 
+\item dropout = 0.2
+\item $\alpha$/LR dropping at 50\% and 75\% of the run
+\item around $\alpha=0.25$, $\beta= 0.05$, $\gamma= 0.7$
+\item annealed $\gamma$ to reduce the influence of  $\sigma$ as the model converges
+\item $\sigma$ updated twice every epoch, in the middle and at the end, for DenseNet-BC 250 and DenseNet-100 and after every batch for the others
+\item number of updates per epoch affects performance = new hyperparameter
+\item earlier layers have $\gamma=0.9 * \gamma$
 \end{itemize}
 
 \end{frame}
-
 %--------- END Frame 7 -------------
 \begin{frame}{Results}
 \begin{figure}[h]
-\includegraphics[width=0.9\textwidth]{img/dropout_vs_sdr}
+\includegraphics[width=0.9\textwidth]{img/results}
 \end{figure}
 \end{frame}
 %--------- END Frame 7 -------------
@@ -180,6 +193,13 @@ Continually lower $\sigma$ = lower temperature:
 \includegraphics[width=0.9\textwidth]{img/titrated}
 \end{figure}
 \end{frame}
+%--------- END Frame 7 -------------
+\begin{frame}{Results}
+\begin{figure}[h]
+\includegraphics[width=0.9\textwidth]{img/dropout_vs_sdr}
+\end{figure}
+\end{frame}
+
 
 %--------- END Frame 12 -------------
 \begin{frame}{Sources}
