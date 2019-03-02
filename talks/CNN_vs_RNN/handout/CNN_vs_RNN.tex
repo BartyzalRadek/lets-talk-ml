@@ -107,17 +107,67 @@ There are two ways to increase the receptive field of the TCN
 The effective history of one such layer is
 $(k - 1)d$. \\
 
-The $d$ is increased exponentially with the depth of the network (i.e., $d = O(2^i)$ at level $i$ of the network). This ensures that there is some filter that hits each input within the effective history, while also allowing for an extremely large effective history using deep networks.
+The $d$ is increased exponentially with the depth of the network (i.e., $d = O(2^i)$ at level $i$ of the network). This ensures that there is some filter that hits each input within the effective history, while also allowing for an extremely large effective history using deep networks. An illustration is in Figure \ref{fig:diagrams}a.
+
+\begin{figure}[h!]
+\includegraphics[width=1.0\textwidth]{../img/diagrams}
+\caption{a) Dilated causal convolution with $k=3$, $d=[2^0, 2^1, 2^2]$. The receptive field is able to cover all values from the input sequence. b) TCN residual block. An 1x1 convolution is added when residual input and output have different dimensions. c) An example of residual connection in a TCN.}
+\label{fig:diagrams}
+\end{figure}
 
 \subsection{Residual Connections}
 
+A residual block contains a branch leading out to a series of transformations $F$, whose outputs are added to the input $x$ of the block:
+$$o = \text{Activation}(x + F(x))$$
+This effectively allows layers to learn modifications to the identity mapping rather than the entire transformation, which has repeatedly been shown to benefit very deep networks.
 
+A generic residual module shown in Figure \ref{fig:diagrams}b is used in place of a standard convolutional layer to help convergence. It uses spatial dropout for regularization: at each training step, a whole channel is zeroed out.
+
+In standard ResNet the input is added directly to the output of the residual function, in TCN (and ConvNets in general) the input and output could have different widths. To account for discrepant input-output widths, an additional 1x1 convolution is used to ensure that the element-wise addition receives tensors of the same shape.
+
+\subsection{Advantages and disadvantages}
+
+\subsubsection{Advantages}
+\begin{itemize}
+\item \textbf{Parallelism}: Kernels are reused = one layer can be calculated in parallel.
+\item \textbf{Flexible receptive field size}: Changing receptive field by: changing: $d$, $k$, number of layers.
+\item \textbf{Stable gradients}: Backpropagation path different from the temporal direction of the sequence = the error propagates only through layers not through time.
+\item \textbf{Low memory requirement for training}: Kernels are reused = less memory than LSTMs that keep partial results for various gates.
+\item \textbf{Variable length inputs}: TCNs can also take in inputs of arbitrary lengths by sliding the 1D convolutional kernels.
+\end{itemize}
+
+\subsubsection{Disadvantages}
+
+\begin{itemize}
+\item \textbf{Data storage during evaluation}: LSTMs need only one hidden state to predict. TCNs need whole input sequence.
+\item \textbf{Potential parameter change for a transfer of domain}: If transfering to a domain with longer history dependencies, the $k$ and $d$ might need to be changed.
+\end{itemize}
+
+\section{Results}
+
+The datasets are explained well in the paper.
+The results comparing TCN with standard RNN are shown in Figure \ref{fig:results}. The comparison with SOTA is shown in Figure \ref{fig:sota}.
+
+\begin{figure}[h!]
+\includegraphics[width=1.0\textwidth]{../img/results}
+\caption{Comparison of TCN and standard RNN. The TCNs had tuned $k$, $d$, number of layers, gradient clipping. They did a grid search over optimizer, recurrent drop, learning rate, gradient clipping, and initial forget-gate bias. Both TCN and RNN should have similar number of parameters in the comparisons.}
+\label{fig:results}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=1.0\textwidth]{../img/sota}
+\caption{Comparison of TCN and State-of-the-art results on the datasets.}
+\label{fig:sota}
+\end{figure}
 
 \section{Conclusion}
+The results strongly suggest that the generic TCN architecture with minimal tuning outperforms canonical recurrent architectures across a broad variety of sequence modeling tasks that are commonly used to benchmark the performance of recurrent architectures themselves. 
+
+TCN excel at the adding and copy tasks where they achieve perfect accuracy. The ability to memorize information from distant past has been evaluated on the copy task with increasing length of the sequence between the input that needs to be remembered and the output where it needs to be reproduced. TCNs consistently converged to 100\% accuracy for all sequence lengths, whereas LSTMs and GRUs of the same size quickly degenerated to random guessing as the sequence length T grows.
 
 
 
-
+\clearpage
 
 \begin{thebibliography}{0}
   \bibitem[1]{cit:nn} Nielsen, Michael A. Neural networks and deep learning. Vol. 25. USA: Determination press, 2015.

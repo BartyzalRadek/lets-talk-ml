@@ -79,16 +79,16 @@ $\implies$ Not suitable for e.g. translation where
 
 Family of architectures:
 \begin{itemize}
-\item causal convolution = no future to past information leakage
-\item sequence to sequence of the same length = 1D FCN with zero padding to keep size for next layer
+\item causal convolution = only look at the past
+\item sequence to sequence of the same length = 1D FCN with zero padding to keep same size for the next layer
 \end{itemize}
 
 \vfill
 
 Able to have long effective history by:
 \begin{itemize}
-\item deep networks (augmented with residual layers) 
-\item dilated convolutions
+\item deep nets with residual connections = learn modifications to the identity mapping rather than the entire transformation
+\item dilated convolutions = exponentially increased receptive field with subsequent layers
 \end{itemize}
 
 
