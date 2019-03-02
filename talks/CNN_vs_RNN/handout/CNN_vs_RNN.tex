@@ -74,13 +74,42 @@ This formalism encompasses many settings such as \textbf{auto-regressive predict
 \section{Temporal Convolutional Networks (TCN)}
 TCN describe a family of network architectures.
 The distinguishing characteristics of TCNs are: 
+
 \begin{itemize}
-\item The convolutions in the architecture are causal, meaning that there is no information “leakage” from future to past.
-\item The architecture can take a sequence of any length and map it to an output sequence of the same length, just as with an RNN.
+\item The convolutions in the architecture are causal, meaning that there is no information “leakage” from future to past. This is achieved by \textbf{Causal convolutions}, convolutions where an output at time t is convolved only with elements from time t and earlier in the previous layer.
+
+\item The architecture can take a sequence of any length and map it to an output sequence of the same length, just as with an RNN. This is achieved by using \textbf{1D fully-convolutional network (FCN)} architecture where each hidden layer is the same length as the input layer, and zero padding of length (kernel size $-$ 1) is added to keep subsequent layers the same length as previous ones.
 \end{itemize}
 
-Beyond this, TCNs are able to build very long effective history sizes (i.e., the ability for the networks to look very far into the past to make a prediction) using a combination of very deep networks (augmented with residual layers) and dilated convolutions.
+Beyond this, TCNs are able to build very long effective history sizes (i.e., the ability for the networks to look very far into the past to make a prediction) using a combination of:
 
+\begin{itemize}
+\item Very deep networks augmented with \textbf{residual connections} for easier convergence.
+\item \textbf{Dilated convolutions} to create exponentially larger receptive field with every added layer.
+\end{itemize}
+
+\subsection{Dilated Convolutions}
+A simple causal convolution is only able to look back at a history with size linear in the depth of the network. This makes it challenging to apply it on sequence tasks requiring longer history.
+
+Dilated convolution enables an exponentially large receptive field. More formally, for a 1-D sequence input $X \in \mathbb{R}^n$ and a filter $f:\{0, \dots , k - 1\} \rightarrow \mathbb{R}$, the dilated convolution operation $F$ on element at index $s$ of the sequence is defined as:
+
+\begin{equation}
+F(s) = \sum_{i=0}^{k-1}{f(i)X_{s - d \cdot i}}
+\end{equation}
+
+where $d$ is the dilation factor, $k$ is the filter size, and $s - d \cdot i$ represents the direction into the past. Dilation is thus equivalent to introducing a fixed step between every two adjacent filter taps. When $d=1$, a dilated convolution reduces to a regular convolution. Using larger dilation enables an output at the top level to represent a wider range of inputs, thus effectively expanding the receptive field of a ConvNet.
+
+There are two ways to increase the receptive field of the TCN
+\begin{itemize}
+\item Choosing larger filter sizes $k$.
+\item Increasing the dilation factor $d$.
+\end{itemize}
+The effective history of one such layer is
+$(k - 1)d$. \\
+
+The $d$ is increased exponentially with the depth of the network (i.e., $d = O(2^i)$ at level $i$ of the network). This ensures that there is some filter that hits each input within the effective history, while also allowing for an extremely large effective history using deep networks.
+
+\subsection{Residual Connections}
 
 
 
