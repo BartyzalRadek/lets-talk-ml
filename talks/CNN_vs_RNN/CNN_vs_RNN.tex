@@ -72,6 +72,25 @@ $\implies$ Not suitable for e.g. translation where
 \item each element of output sequence depends on the whole input sequence = we compress the whole input sequence and then reconstruct it 
 \end{itemize}
 
+\end{frame}
+
+%--------- END Frame 12 -------------
+\begin{frame}{Temporal Convolutional Networks (TCN)}
+
+Family of architectures:
+\begin{itemize}
+\item causal = no future to past information leakage
+\item sequence to sequence of the same length
+\end{itemize}
+
+\vfill
+
+Able to have long effective history by:
+\begin{itemize}
+\item deep networks (augmented with residual layers) 
+\item dilated convolutions
+\end{itemize}
+
 
 \end{frame}
 
@@ -79,7 +98,7 @@ $\implies$ Not suitable for e.g. translation where
 \begin{frame}{Dilated Causal Convolution}
 \begin{figure}[h]
 \includegraphics[width=0.8\textwidth]{img/dilated}
-\caption{Dilated causal convolution with $k=3$, $d=[1, 2, 3]$. The receptive field is able to cover all values from the input sequence.}
+\caption{Dilated causal convolution with $k=3$, $d=[2^0, 2^1, 2^2]$. The receptive field is able to cover all values from the input sequence.}
 \end{figure}
 \end{frame}
 %--------- END Frame 12 -------------

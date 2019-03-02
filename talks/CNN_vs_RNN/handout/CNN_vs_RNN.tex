@@ -71,6 +71,19 @@ The goal of learning in the sequence modeling setting is to find a network $f$ t
 
 This formalism encompasses many settings such as \textbf{auto-regressive prediction} (where we try to predict some signal given its past) by setting the target output to be simply the input shifted by one time step. It does not, however, directly capture domains such as \textbf{machine translation}, or \textbf{sequence-to-sequence prediction} in general, since in these cases the entire input sequence (including “future” states) can be used to predict each output (though the techniques can naturally be extended to work in such settings).
 
+\section{Temporal Convolutional Networks (TCN)}
+TCN describe a family of network architectures.
+The distinguishing characteristics of TCNs are: 
+\begin{itemize}
+\item The convolutions in the architecture are causal, meaning that there is no information “leakage” from future to past.
+\item The architecture can take a sequence of any length and map it to an output sequence of the same length, just as with an RNN.
+\end{itemize}
+
+Beyond this, TCNs are able to build very long effective history sizes (i.e., the ability for the networks to look very far into the past to make a prediction) using a combination of very deep networks (augmented with residual layers) and dilated convolutions.
+
+
+
+
 \section{Conclusion}
 
 
