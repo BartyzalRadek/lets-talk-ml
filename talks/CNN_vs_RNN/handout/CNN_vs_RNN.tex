@@ -1,0 +1,92 @@
+\documentclass[12pt, titlepage]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} %graphics files inclusion
+% \usepackage{subfig} %subfigures
+\usepackage{amsmath} %advanced maths
+\usepackage{amssymb} %additional math symbols
+\usepackage{dsfont}  %contains \mathds{1}
+\usepackage{algpseudocode}
+\usepackage{url}
+
+\usepackage{dirtree} %directory tree visualisation
+
+\usepackage[draft]{todonotes}   % notes showed
+
+\usepackage[ruled,vlined]{algorithm2e}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\usepackage{xcolor, colortbl}
+\usepackage{pdfpages}
+
+\newcommand{\lnorm}[1]{\left\lVert#1\right\rVert^2}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\algnewcommand\algorithmicforeach{\textbf{for each:}}
+\algnewcommand\ForEach{\item[ \algorithmicforeach]}
+\author{Radek Bartyzal}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vfill
+    {\bfseries\Huge
+        An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling \\
+    }    
+        \vskip1cm
+        
+    {\bfseries\Large 
+    Czech Technical University in Prague\\ 
+    Faculty of Informatics\\ 
+    \vskip1cm
+    Radek Bartyzal\\
+    }    
+    \vskip1cm
+    March 5, 2019
+    \vfill
+
+    \vfill
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+
+\section{Prerequisites}
+The following text assumes that the reader is familiar with these terms:
+
+\begin{itemize}
+\item Neural Networks: Chapter 1 of \cite{cit:nn} 
+\item 
+\end{itemize}
+
+\section{Sequence Modeling}\label{sec:seq}
+Suppose that we are given an input sequence $x_0, \dots , x_T$, and wish to predict some corresponding outputs $y_0, \dots , y_T$ at each time step. The key constraint, called \textbf{causal constraint}, is that to predict the output $y_t$ for some time step $t$, we are constrained to only use those inputs that have been previously observed: $x_0, \dots , x_t$. In other words the function producing $y_t$ cannot depend on future inputs $x_{t+1}, \dots, x_T.$
+
+
+The goal of learning in the sequence modeling setting is to find a network $f$ that minimizes some expected loss between the actual outputs and the predictions, $L(y_0, \dots , y_T, f(x_0, \dots , x_T))$, where the sequences and outputs are drawn according to some distribution.
+
+This formalism encompasses many settings such as \textbf{auto-regressive prediction} (where we try to predict some signal given its past) by setting the target output to be simply the input shifted by one time step. It does not, however, directly capture domains such as \textbf{machine translation}, or \textbf{sequence-to-sequence prediction} in general, since in these cases the entire input sequence (including “future” states) can be used to predict each output (though the techniques can naturally be extended to work in such settings).
+
+\section{Conclusion}
+
+
+
+
+
+\begin{thebibliography}{0}
+  \bibitem[1]{cit:nn} Nielsen, Michael A. Neural networks and deep learning. Vol. 25. USA: Determination press, 2015.
+  
+  
+
+
+  
+  
+  
+  
+  \end{thebibliography}
+
+
+ 
+\end{document}
