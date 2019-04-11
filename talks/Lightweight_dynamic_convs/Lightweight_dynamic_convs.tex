@@ -133,7 +133,8 @@
 \end{figure}
 
 \begin{itemize}
-\item dynamic = add dense layer based on $k$ elements generates the kernel = the kernel changes as is slides over the temporal dimension
+\item dynamic = add dense layer based on $k$ elements  that generates the kernel = the kernel changes as is slides over the temporal dimension
+\item the context for the output is still just the $k$ elements as with LConv
 \end{itemize}
 
 \end{frame}
@@ -165,14 +166,69 @@
 Lightweight and dynamic  convolutions
 \begin{itemize}
 \item pay "attention" only to $k$ surrounding elements
+\item ends with output projection to correct dim by linear layer
 
 \end{itemize}
 
 \end{frame}
 %--------- END Frame 12 -------------
+\begin{frame}{Experiments}
 
+\begin{itemize}
+\item Transformer network - replace self-attention modules with LConv or Dynamic Conv
+\item LConv, DConv use less params = increase number of encoder blocks to $N = 7$ to match number of params
+\item $H = 16$
+\item encoder/decoder block kernels: $3, 7, 15, 31 \times 4$
+\item top 3 layers of decoder have kernel size $31$
+\item We train three random initializations of a each configuration and report test accuracy of the seed
+which resulted in the highest validation BLEU
+\item machine translation, lang. modeling, summarization
+\end{itemize}
 
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results}
 
+\begin{figure}[h]
+\includegraphics[width=1.0\textwidth]{img/results1}
+\caption{ Machine translation accuracy in terms of BLEU for WMT En-De and WMT En-Fr on
+newstest2014.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results}
+
+\begin{figure}[h]
+\includegraphics[width=1.0\textwidth]{img/results2}
+\caption{ Machine translation accuracy in terms of BLEU on IWSLT and WMT Zh-En.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results}
+
+\begin{figure}[h]
+\includegraphics[width=1.0\textwidth]{img/results3}
+\caption{Ablation on WMT English-German newstest2013. (+) indicates that a result includes all
+preceding features. Speed results based on beam size 4, batch size 256 on an NVIDIA P100 GPU.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results}
+
+\begin{figure}[h]
+\includegraphics[width=1.0\textwidth]{img/results4}
+\caption{Language modeling results on the Google Billion Word test set. + does not include embedding and softmax layers}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results}
+
+\begin{figure}[h]
+\includegraphics[width=1.0\textwidth]{img/results5}
+\caption{Results on CNN-DailyMail summarization. We compare to likelihood trained approaches
+except for Celikyilmaz et al. (2018).}
+\end{figure}
+\end{frame}
 
 %--------- END Frame 12 -------------
 \begin{frame}{Sources}
@@ -181,7 +237,7 @@ Lightweight and dynamic  convolutions
 
   \bibitem[1]{cit:lconv} 1. Wu, Felix, et al. "Pay Less Attention with Lightweight and Dynamic Convolutions." arXiv preprint arXiv:1901.10430 (2019). \url{https://arxiv.org/abs/1901.10430} 
   
-  \bibitem[2]{cit:imgs} 2. Medium blogpost. \url{https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728}
+  \bibitem[2]{cit:imgs} 2. Medium blogpost on depthwise convolutions. \url{https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728}
   
 \end{thebibliography}
 
