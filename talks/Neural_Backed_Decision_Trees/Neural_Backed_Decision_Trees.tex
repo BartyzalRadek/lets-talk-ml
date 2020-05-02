@@ -103,8 +103,22 @@ Saliency maps:
 \end{itemize}
 
 \end{frame}
-
 %--------- END Frame 12 -------------
+\begin{frame}{Soft vs Hard prediction}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/hard_soft}
+\end{figure}
+
+\begin{itemize}
+\item Hard: select argmax of nodes at current level and continue only with the winners children nodes
+\item Soft: softmax of nodes at each level => calculate probability of path from the leaf to the root and select the leaf with highest path probability
+\item Naive: does not support multiple levels
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+
 
 \begin{frame}{Sources}
 
