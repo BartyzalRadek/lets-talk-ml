@@ -85,21 +85,11 @@ Saliency maps:
 
 \begin{itemize}
 \item get embedding of the sample = $x$ = output of the pre-last layer
-\item take the last weight matrix $W$ of the net = the producing the prediction probabilities
-\item each row $w_i$ corresponds to one output = class
-\item each class $c$ = leaf node $c$ => $w_c$ = $r_c$ = representation vector of node $c$  
-\item probability of node $n$ = $<xr_n^T>$ = for leaf node $c$ = $xw_c^T$
+\item take the last weight matrix $W$ of the net = producing the prediction probabilities
+\item each column $w_i$ corresponds to one output = class
+\item each class $c$ = leaf node $c$ $\implies$ $w_c$ = $r_c$ = representation vector of node $c$  
+\item probability of node $n$ = $<x,r_n>$ = for leaf node $c$ = $<x, w_c>$
 \item representation vector of inner node = average of repr. vectors of child nodes
-\end{itemize}
-
-\end{frame}
-%--------- END Frame 12 -------------
-\begin{frame}{Training}
-
-\begin{itemize}
-\item pre-train the model on the dataset
-\item construct the nodes by hierarchical clustering done from the $w_i$ rows of the final weight matrix = get hierarchy of nodes = decision tree
-\item fine-tune the model on the fixed hierarchy to cluster the $w_i$ of the parent nodes together better
 \end{itemize}
 
 \end{frame}
@@ -114,6 +104,57 @@ Saliency maps:
 \item Hard: select argmax of nodes at current level and continue only with the winners children nodes
 \item Soft: softmax of nodes at each level => calculate probability of path from the leaf to the root and select the leaf with highest path probability
 \item Naive: does not support multiple levels
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Training}
+
+\begin{itemize}
+\item pre-train the model on the dataset
+\item construct the nodes by hierarchical clustering done from the $w_i$ columns of the final weight matrix = get hierarchy of nodes = decision tree
+\item fine-tune the model on the fixed hierarchy to cluster the $w_i$ of the parent nodes together better
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Inducing = building hierarchy of nodes}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/build}
+\caption{\textbf{A.} Load the weights of pre-trained
+neural network’s final fully-connected layer = $W$. \textbf{B.}
+Use each column $w_i$ of $W$ as representative vectors for each leaf node. \textbf{C.} Use the average of each
+pair of leaves for the parents’ representative vectors. \textbf{D.} For each ancestor, take the
+subtree it is the root for. Average representative vectors for all leaves in the subtree.
+That average is the ancestor’s representative vector.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Fine-tuning is not essential}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/loss}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Interpretability}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/interpret}
+\caption{The ResNet10 hierarchy makes less sense than the WideResNet hierarchy. In this hierarchy, Cat, Frog, and Airplane are placed under the same subtree. The WideResNet hierarchy cleanly splits Animals and Vehicles, on each side of the hierarchy.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Conclusion}
+
+\begin{itemize}
+\item hierarchical clustering of the columns $w_i$ of the last weight matrix $W$
+\item check if the clustering makes intuitive sense = animals / vehicles in different subtrees
+\item visualize tree traversal paths = find the most frequently traversed incorrect paths $\implies$ e.g. see dependency on the background: both fish and ships have sea
 \end{itemize}
 
 \end{frame}
