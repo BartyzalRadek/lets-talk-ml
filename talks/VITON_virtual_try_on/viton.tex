@@ -210,8 +210,8 @@ Steps:
 
 What is required:
 \begin{itemize}
-\item trained pose estimator
-\item trained human parser = pixel-wise image segmentation of body parts
+\item trained pose estimator - available pre-trained  \cite{cit:posenet}
+\item trained human parser = pixel-wise image segmentation of body parts = available pre-trained (Mask-RCNN on COCO = human is 1 of 80 classes) \cite{cit:mask}
 \end{itemize}
 
 \vfill
@@ -236,9 +236,16 @@ New version O-VITON:
   \bibitem[2]{cit:trimirror} 2. TriMirror video \url{https://www.youtube.com/watch?v=vYJ19Z9i-zY} 
   
   \bibitem[3]{cit:3d} 3. S. Yang, T. Ambert, Z. Pan, K. Wang, L. Yu, T. Berg, and M. C. Lin. Detailed garment recovery from a single-view image. In ICCV, 2017
+  
+  
+  \bibitem[4]{cit:posenet} 4. Pre-trained PoseNet  \url{https://github.com/tensorflow/tfjs-models/tree/master/posenet} 
+  
+
+  \bibitem[5]{cit:densepose} 5. Pre-trained Dense Pose in Caffe... WTF Facebook? \url{https://github.com/facebookresearch/DensePose} 
+  
+  \bibitem[6]{cit:mask} 6. Pre-trained Mask-RCNN on COCO. \url{https://github.com/matterport/Mask_RCNN} 
+  
+  
 \end{thebibliography}
-
-\end{frame}
-
- 
+\end{frame} 
 \end{document}
