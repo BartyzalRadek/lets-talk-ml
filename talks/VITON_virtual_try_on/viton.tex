@@ -179,12 +179,51 @@ Steps:
 
 \end{frame}
 %--------- END Frame 12 -------------
+\begin{frame}{Effect of removal of body and pose}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/remove}
+\caption{For each method, we show its coarse result and predicted clothing mask output by the cor- responding encoder-decoder generator.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Failure cases}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/fails}
+\caption{Failure cases of our method due to rarely-seen poses (example on the left) or a huge mismatch in the current and target clothing shapes (right arm in the right example).}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results on real photos from COCO dataset}
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{img/wild}
+
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
 \begin{frame}{Conclusion}
 
 What is required:
 \begin{itemize}
 \item trained pose estimator
-\item trained human parser = image segmentation of body parts
+\item trained human parser = pixel-wise image segmentation of body parts
+\end{itemize}
+
+\vfill
+
+New version O-VITON:
+\begin{itemize}
+\item similar principle
+\item requires training:
+\begin{itemize}
+\item pixel-wise semantic segmentation of body parts + clothing
+\item DensePose network which captures the pose and body shape
+\end{itemize}
 \end{itemize}
 
 \end{frame}
