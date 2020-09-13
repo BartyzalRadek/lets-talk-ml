@@ -66,14 +66,17 @@ How to make it better?
 
 \textbf{AutoAugment} \cite{cit:auto}
 \begin{itemize}
-\item 14 image transformation functions: f(image, magnitude)
-\item configure 30 parameters:
+\item 16 image transformation functions: f(image, magnitude)
+\item each has 2 parameters:
 \begin{itemize}
-\item prob of choosing each transformation = 14 params
-\item magnitude of each transformation = 14 params
+\item prob of applying the transformation (discretized 11 values)
+\item magnitude of the transformation (discretized 10 values)
 \end{itemize}
-\item params were chosen by running hyper param search on a proxy task
+\item goal = find 5 transformations with proper params
+\item use Reinforcement Learning (RL) to find them
+\item RL reward = validation accuracy on a proxy task
 \item proxy task = smaller net + subset of train dataset
+\item cca 15000 policies (solutions) were sampled during training
 \end{itemize}
 \end{frame}
 %--------- END Frame 12 -------------
@@ -92,6 +95,7 @@ equal probability
 \item $\implies$ no proxy task, directly optimize for the final net
 \end{itemize}
 
+
 \end{frame}
 %--------- END Frame 12 -------------
 \begin{frame}{RandAugment code}
@@ -103,6 +107,39 @@ equal probability
 
 \end{frame}
 %--------- END Frame 12 -------------
+\begin{frame}{RandAugment: example of augmented images}
+
+\begin{figure}[h]
+\includegraphics[width=0.6\textwidth]{img/examples}
+\caption{N=2 and three magnitudes are shown corresponding to the optimal distortion magnitudes for ResNet-50, EfficientNet-B5 and EfficientNet-B7.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{RandAugment: justification}
+
+\textbf{Is this going to be better than AutoAugment?}
+
+\begin{itemize}
+\item obviously faster than running 15000 trainings on proxy task
+\item results from proxy task do not translate that well to the real task
+\item both of these change optimal augmentation:
+\begin{itemize}
+\item dataset size
+\item model size
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Model and dataset size affect best magnitude}
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/proxy}
+\caption{Uses CIFAR-10 validation accuracy for Wide-ResNet architectures averaged over 20 random initializations, N = 1. Dashed line = properly scaled M found by AutoAugment on proxy task.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
 \begin{frame}{Results: ImageNet}
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/imagenet}
@@ -110,10 +147,17 @@ equal probability
 \end{figure}
 \end{frame}
 %--------- END Frame 12 -------------
-\begin{frame}{Results: COCO}
+\begin{frame}{Results: COCO detection task}
 \begin{figure}[h]
 \includegraphics[width=0.8\textwidth]{img/coco}
-\caption{Mean average precision (mAP) on COCO detection task. Search space size is reported as the order of magnitude of the number of possible augmentation policies. Models are trained for 300 epochs from random initialization.}
+\caption{Models are trained for 300 epochs from random initialization. AutoAugment used extra transformations to augment the localized bounding box. AutoAugment used 15K GPU hours, where as RandAugment was tuned on 6 values.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results: CIFAR, SVHN}
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{img/svhn}
+\caption{Test accuracy (\%). AA, RA results averaged over 10 independent runs. SVHN core set consists of 73K examples. Full SVHN has extra 531K easier examples to help training but RA has same acc.}
 \end{figure}
 \end{frame}
 %--------- END Frame 12 -------------
@@ -124,7 +168,34 @@ equal probability
 \end{figure}
 \end{frame}
 %--------- END Frame 12 -------------
+\begin{frame}{Individual effects of transformations}
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{img/trans}
+\caption{Average improvement due to each transformation. Average difference in validation accuracy (\%) when a particular transformation is added to a randomly sampled set of transformations. Wide-ResNet-28-2 trained on CIFAR-10 using RandAugment (N = 3, M = 4) with the randomly sampled set of transformations, with no other data augmentation.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
 \begin{frame}{Conclusion}
+
+\textbf{Main}:
+\begin{itemize}
+\item slightly better accuracy for 2 hyperparams, try: 
+\begin{itemize}
+\item $N \in \{1, 2, 3\}$
+\item $M \in \{6, 12, 18, 24\}$ on uniform scale $1$ - $30$
+
+\end{itemize}
+
+\item try stronger augmentation when enlarging datasets and models
+\end{itemize}
+
+\vfill
+
+\textbf{Other}:
+\begin{itemize}
+\item linearly increasing magnitude during training does not help = magnitude = M = constant during training
+\item SOTA +1.0\% on ImageNet when used on EfficientNet-B7 
+\end{itemize}
 
 \end{frame}
 
