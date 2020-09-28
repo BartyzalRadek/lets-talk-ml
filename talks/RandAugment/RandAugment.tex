@@ -168,6 +168,13 @@ equal probability
 \end{figure}
 \end{frame}
 %--------- END Frame 12 -------------
+\begin{frame}{Posterize}
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/posterize}
+\caption{Posterize reduces number of bits per channel. Hurst model accuracy.}
+\end{figure}
+\end{frame}
+%--------- END Frame 12 -------------
 \begin{frame}{Individual effects of transformations}
 \begin{figure}[h]
 \includegraphics[width=0.8\textwidth]{img/trans}
@@ -194,7 +201,8 @@ equal probability
 \textbf{Other}:
 \begin{itemize}
 \item linearly increasing magnitude during training does not help = magnitude = M = constant during training
-\item SOTA +1.0\% on ImageNet when used on EfficientNet-B7 
+\item SOTA +0.6\% on ImageNet Top 1 when used on EfficientNet-B7 \cite{cit:sota} 
+\item all transformations available in PIL package \cite{cit:pil}
 \end{itemize}
 
 \end{frame}
@@ -206,6 +214,10 @@ equal probability
   \bibitem[1]{cit:paper} 1. Cubuk, Ekin D., et al. "Randaugment: Practical automated data augmentation with a reduced search space." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops. 2020. \url{https://arxiv.org/abs/1909.13719} 
   
    \bibitem[2]{cit:auto} 2. Cubuk, Ekin D., et al. "Autoaugment: Learning augmentation policies from data." arXiv preprint arXiv:1805.09501 (2018). \url{https://arxiv.org/abs/1805.09501} 
+   
+   \bibitem[3]{cit:sota} 3. SOTA ImageNet checkpoints. \url{https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet}
+   
+   \bibitem[4]{cit:pil} 4. PIL. \url{https://pypi.org/project/Pillow/}
    
 \end{thebibliography}
 \end{frame} 
