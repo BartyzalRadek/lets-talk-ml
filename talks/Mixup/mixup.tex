@@ -194,6 +194,26 @@ Mixup helps with:
 \end{itemize}
 
 \end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Mixup: Conclusion}
+
+\textbf{Implementation details:}
+\begin{itemize}
+\item mix 1 batch with itself just shuffled
+\item sample $\lambda$ for each created example
+\item to remove duplicates: $\lambda = max(\lambda, 1 - \lambda)$ $\implies \lambda \in [0.5, 1.0]$ 
+\item if using mixup - lower weight decay
+\end{itemize}
+
+\vfill
+
+\textbf{Further results:}
+\begin{itemize}
+\item SMOTE (interpolate only between same-class samples) performs worse
+\item combining more than 2 samples does not help
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}{Sources}
 %--------- END Frame 12 -------------
