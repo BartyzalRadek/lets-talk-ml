@@ -160,7 +160,58 @@ Auto-regressive models:
 
 \end{frame}
 %--------- END Frame 12 -------------
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 = Hierarchical version}
 
+\begin{itemize}
+\item just like VQ-VAE but done in 3 steps
+\item each step increases the resolution and is conditioned on te previous step
+\item standard hierarchical stuff to generate higher resolution images
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 Training}
+
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{img/v2-train}
+\caption{The encoders and decoders consist of deep neural networks. The input to the model is a 256 x 256 image that is compressed to quantized latent maps of size 64 x 64 and 32 x 32 for the bottom and top levels, respectively. The decoder reconstructs the image from the two latent maps.}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 Reconstruction examples}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/reconstruction2}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 Generation}
+
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{img/v2-gen}
+\caption{Multi-stage image generation. The top-level PixelCNN prior is conditioned on the class label, the bottom level PixelCNN is conditioned on the class label as well as the first level code. Thanks to the feed-forward decoder, the mapping between latents to pixels is fast. (The example image with a parrot is generated with this model).}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 Generation examples}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/generated2}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{VQ-VAE-2 Generation examples}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/gen-faces-2}
+\end{figure}
+
+\end{frame}
 %--------- END Frame 12 -------------
 \begin{frame}{Sources}
 \begin{thebibliography}{0}
