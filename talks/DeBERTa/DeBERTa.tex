@@ -57,6 +57,8 @@ Paper is by Microsoft Research from 2020/2021.
 \begin{itemize}
 \item improved BERT
 \item models available through Hugging Face
+\item new SOTA in Language Understanding and Lang. Generation downstream tasks
+\item faster pre-training = less steps, but less time?
 \end{itemize}
 
 
@@ -138,7 +140,7 @@ Possible attention matrices = combinations of P, C:
 \end{figure}
 
 \begin{itemize}
-\item the positional vectors are relative = [-2, -1, 0, 1, 2]
+\item the positional vectors are relative = [..., -2, -1, 0, 1, 2, ...]
 \item the positional encodings are shared between layers
 \item max relative distance = $k=512$, after that just pad: [-2, -2, -1, 0]
 \end{itemize}
@@ -166,13 +168,6 @@ Possible attention matrices = combinations of P, C:
 
   \bibitem[1]{cit:paper} 1.He, Pengcheng, et al. "Deberta: Decoding-enhanced bert with disentangled attention." arXiv preprint arXiv:2006.03654 (2020). \url{https://arxiv.org/abs/2006.03654} 
   
-  \bibitem[2]{cit:vae} 2. VAE overview blog post. \url{https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html}
-  
-  \bibitem[3]{snail} 3. Chen, Xi, et al. "Pixelsnail: An improved autoregressive generative model." International Conference on Machine Learning. PMLR, 2018. \url{https://arxiv.org/abs/1712.09763}
-  
-  \bibitem[4]{dp} 4. Razavi, Ali, Aaron van den Oord, and Oriol Vinyals. "Generating diverse high-fidelity images with vq-vae-2." arXiv preprint arXiv:1906.00446 (2019). \url{https://arxiv.org/abs/1906.00446}
-  
-  \bibitem[5]{dp} 5. VQ-VAE implementation \url{https://github.com/nadavbh12/VQ-VAE/tree/master/vq_vae}
   
 \end{thebibliography}
 
