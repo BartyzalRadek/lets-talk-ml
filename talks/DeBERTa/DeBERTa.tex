@@ -57,7 +57,7 @@ Paper is by Microsoft Research from 2020/2021.
 \begin{itemize}
 \item improved BERT
 \item models available through Hugging Face
-\item new SOTA in Language Understanding and Lang. Generation downstream tasks
+\item new SOTA in Language Understanding and Lang. Generation downstream tasks as of January 6, 2021
 \item faster pre-training = less steps, but less time?
 \end{itemize}
 
@@ -81,7 +81,11 @@ Transformer +
 
 \vfill
 
-\textbf{enhanced mask decoder}: provide absolute positional encodings only after the last layer before decoding softmax
+\textbf{enhanced mask decoder}: provide absolute positional encodings right before the last softmax layer decoding the masked words
+
+\vfill
+
+\textbf{Scale invariant Fine Tuning}: perturbe normalized word embeddings = adversarial training = better generalization
 
 \end{frame}
 %--------- END Frame 12 -------------
@@ -132,6 +136,22 @@ Possible attention matrices = combinations of P, C:
 \end{itemize}
 
 \end{frame}
+
+%--------- END Frame 12 -------------
+\begin{frame}{Disentangled attention: Efficient implementation}
+
+\begin{itemize}
+\item an input sequence of length N
+\item requires a space complexity of $O(N^2d)$ to store the relative position embedding for each token
+\item set the maximum relative distance $k$ to 512 for pre-training
+\item embeddings of all possible relative positions are always a subset of $K_r \in R^{2k \times d} \implies$ we can reuse $K_r$ in the attention calculation for all the queries
+\item we do not need to allocate memory to store a relative position embedding for each query and thus reduce the space complexity to $O(kd)$ (probably $O(2kd)$) (for storing $K_r$ and $Q_r$)
+\end{itemize}
+
+
+
+\end{frame}
+
 %--------- END Frame 12 -------------
 \begin{frame}{Relative positional encodings}
  
@@ -146,6 +166,22 @@ Possible attention matrices = combinations of P, C:
 \end{itemize}
 
 \end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Scale invariant Fine Tuning = SiFT}
+
+\begin{itemize}
+\item The model is regularized: model produces the same output distribution as it produces on an adversarial perturbation of that example.
+\item perturbation is applied to the word embedding instead of the word sequence
+\item However, the value ranges (norms) of the embedding vectors vary among different words and models.
+\item variance gets larger for bigger models with billions of parameters, leading to some instability of adversarial training.
+\item SiFT improves the training stability by applying the perturbations to the normalized word embeddings.
+\item Specifically, when fine-tuning DeBERTa to a downstream NLP task in our experiments, SiFT first normalizes the word embedding vectors into stochastic vectors, and then applies the perturbation to the normalized embedding vectors. 
+\item We find that the normalization substantially improves the performance of the fine-tuned models.
+\end{itemize}
+
+
+\end{frame}
+
 %--------- END Frame 12 -------------
 \begin{frame}{Ablation study: everything helps}
 
@@ -162,6 +198,44 @@ Possible attention matrices = combinations of P, C:
 \end{figure}
 
 \end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results: GLUE}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/glue}
+\end{figure}
+
+We use 6 DGX-2 machines (96 V100 GPUs) to train the models. A single model trained with 2K batch size and 1M steps takes about 20 days.
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results: Comparison with similar sized models}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/mnli}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Results: Scale up to 1.5B parameters}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/superglue}
+\end{figure}
+
+\begin{itemize}
+\item we share the projection matrices of relative position embedding $W_{k,r},W_{q,}r$ with $W_{k,c},W_{q,c}$, respectively, in all attention layers = not treating the content/positional information differently?
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Conclusion}
+
+The single 1.5B-parameter DeBERTa model substantially outperforms T5 with 11 billion parameters on the SuperGLUE benchmark by 0.6\%(89.3\% vs. 89.9\%)
+
+\end{frame}
+
+
 %--------- END Frame 12 -------------
 \begin{frame}{Sources}
 \begin{thebibliography}{0}
