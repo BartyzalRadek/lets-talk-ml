@@ -97,7 +97,7 @@ Competitive model using only MLPs = fully connected FF layers with non-lineariti
 
 \end{frame}
 %--------- END Frame 12 -------------
-\begin{frame}{Mixer Block First Shared MLP}
+\begin{frame}{Mixer Block: Token Mixing MLP}
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/mlp1}
@@ -111,7 +111,7 @@ Competitive model using only MLPs = fully connected FF layers with non-lineariti
 
 \end{frame}
 %--------- END Frame 12 -------------
-\begin{frame}{Mixer Block Second Shared MLP}
+\begin{frame}{Mixer Block: Channel Mixing MLP}
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/mlp2}
@@ -147,9 +147,79 @@ Competitive model using only MLPs = fully connected FF layers with non-lineariti
 
 \end{frame}
 %--------- END Frame 12 -------------
-
 %--------- END Frame 12 -------------
+\begin{frame}{Models}
 
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/models}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Fast inference + competitive accuracy}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/stats}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Scales very well with more pretraining data}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/scaling}
+\end{figure}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Token Mixing weights in first, second, third layer}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/filters}
+\end{figure}
+
+\begin{itemize}
+\item first layer = edge detector
+\item later layers = more complex detectors = like CNN
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+\begin{frame}{Embedding projection of the patches = patch channels}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{img/projections}
+\end{figure}
+
+\begin{itemize}
+\item 32x32 learns nice high level patterns
+\item 16x16 (not shown) learns low level noisy patterns
+\end{itemize}
+
+\end{frame}
+%--------- END Frame 12 -------------
+%--------- END Frame 12 -------------
+\begin{frame}{Conclusion}
+
+
+\begin{itemize}
+\item uses patches = specific to images, learned projections like CNN
+\item separate token and channels mixing
+\item fast inference = faster than big ResNet which has better performance
+\item competitive accuracy = not a SoTA
+\item linear scaling with image size = like CNNs
+\item \textbf{best scaling with pretraining dataset size} = biggest advantage
+\end{itemize}
+
+\vfill
+
+My 2 cents:
+\begin{itemize}
+\item adds biases toward images = not a general arch.
+\item interesting for efficiency reasons but does not feel like a direction toward a breakthrough
+\end{itemize}
+
+\end{frame}
 %--------- END Frame 12 -------------
 \begin{frame}{Sources}
 \begin{thebibliography}{0}
